@@ -1,0 +1,26 @@
+{
+	"name": "nuxt-app",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"build": "nuxt build",
+		"dev": "nuxt dev",
+		"generate": "nuxt generate",
+		"preview": "nuxt preview",
+		"postinstall": "nuxt prepare",
+		"format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json|vue)\""
+	},
+	"dependencies": {
+		"@pinia/nuxt": "^0.11.2",
+		"@tailwindcss/vite": "^4.1.13",
+		"nuxt": "^4.1.2",
+		"pinia": "^3.0.3",
+		"radix-ui": "^1.4.3",
+		"tailwindcss": "^4.1.13",
+		"vue": "^3.5.22",
+		"vue-router": "^4.5.1"
+	},
+	"devDependencies": {
+		"prettier": "^3.6.2"
+	}
+}
