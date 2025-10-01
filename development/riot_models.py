@@ -1,5 +1,5 @@
-from typing import List, Optional
-from pydantic import BaseModel, Field, ConfigDict
+from typing import List, Optional, Dict
+from pydantic import BaseModel, Field, ConfigDict, RootModel
 
 
 class SummonerDTO(BaseModel):
@@ -199,6 +199,7 @@ class MissionsDTO(BaseModel):
 #     wardTakedowns: int
 #     wardTakedownsBefore20M: int
 #     model_config = ConfigDict(extra="ignore")
+
 
 class ChallengesDTO(BaseModel):
     model_config = ConfigDict(extra="ignore")
@@ -445,4 +446,117 @@ class AccountDTO(BaseModel):
     puuid: str
     gameName: str
     tagLine: str
+    model_config = ConfigDict(extra="ignore")
+
+
+class PositionDto(BaseModel):
+    x: int = None
+    y: int = None
+    model_config = ConfigDict(extra="ignore")
+
+
+class DamageStatsDto(BaseModel):
+    magicDamageDone: int = None
+    magicDamageDoneToChampions: int = None
+    magicDamageTaken: int = None
+    physicalDamageDone: int = None
+    physicalDamageDoneToChampions: int = None
+    physicalDamageTaken: int = None
+    totalDamageDone: int = None
+    totalDamageDoneToChampions: int = None
+    totalDamageTaken: int = None
+    trueDamageDone: int = None
+    trueDamageDoneToChampions: int = None
+    trueDamageTaken: int = None
+    model_config = ConfigDict(extra="ignore")
+
+
+class ChampionStatsDto(BaseModel):
+    abilityHaste: int = None
+    abilityPower: int = None
+    armor: int = None
+    armorPen: int = None
+    armorPenPercent: int = None
+    attackDamage: int = None
+    attackSpeed: int = None
+    bonusArmorPenPercent: int = None
+    bonusMagicPenPercent: int = None
+    ccReduction: int = None
+    cooldownReduction: int = None
+    health: int = None
+    healthMax: int = None
+    healthRegen: int = None
+    lifesteal: int = None
+    magicPen: int = None
+    magicPenPercent: int = None
+    magicResist: int = None
+    movementSpeed: int = None
+    omnivamp: int = None
+    physicalVamp: int = None
+    power: int = None
+    powerMax: int = None
+    powerRegen: int = None
+    spellVamp: int = None
+    model_config = ConfigDict(extra="ignore")
+
+
+class ParticipantFrameDto(BaseModel):
+    championStats: ChampionStatsDto = None
+    currentGold: int = None
+    damageStats: DamageStatsDto = None
+    goldPerSecond: int = None
+    jungleMinionsKilled: int = None
+    level: int = None
+    minionsKilled: int = None
+    participantId: int = None
+    position: PositionDto = None
+    timeEnemySpentControlled: int = None
+    totalGold: int = None
+    xp: int = None
+    model_config = ConfigDict(extra="ignore")
+
+
+class ParticipantFramesDto(RootModel):
+    root: Dict[str, ParticipantFrameDto] = None
+
+
+class EventsTimeLineDto(BaseModel):
+    timestamp: int = None
+    realTimestamp: int = None
+    type: str = None
+    model_config = ConfigDict(extra="ignore")
+
+
+class FramesTimeLineDto(BaseModel):
+    events: List[EventsTimeLineDto] = None
+    participantFrames: ParticipantFramesDto = None
+    timestamp: int = None
+    model_config = ConfigDict(extra="ignore")
+
+
+class ParticipantTimeLineDto(BaseModel):
+    participantId: int = None
+    puuid: str = None
+    model_config = ConfigDict(extra="ignore")
+
+
+class InfoTimeLineDto(BaseModel):
+    endOfGameResult: str = None
+    frameInterval: int = None
+    gameId: int = None
+    participants: List[ParticipantTimeLineDto] = None
+    frames: List[FramesTimeLineDto] = None
+    model_config = ConfigDict(extra="ignore")
+
+
+class MetadataTimeLineDto(BaseModel):
+    dataVersion: str = None
+    matchId: str = None
+    participants: List[str] = None
+    model_config = ConfigDict(extra="ignore")
+
+
+class TimelineDto(BaseModel):
+    metadata: MetadataTimeLineDto = None
+    info: InfoTimeLineDto = None
     model_config = ConfigDict(extra="ignore")

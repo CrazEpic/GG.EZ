@@ -1,6 +1,6 @@
 import os
 import requests
-from development.riot_models import LeagueEntryDTO, AccountDTO, SummonerDTO, MatchDTO
+from development.riot_models import LeagueEntryDTO, AccountDTO, SummonerDTO, MatchDTO, TimelineDto
 from typing import List, Optional, Literal
 
 
@@ -97,6 +97,15 @@ def get_matches_by_puuid(
     else:
         print(f"Error {response.status_code}: {response.text}")
         return []
+
+
+def get_match_timeline_by_id(match_id: str) -> Optional[TimelineDto]:
+    response = send_riot_api_request(base_url=america_server, path=f"/lol/match/v5/matches/{match_id}/timeline")
+    if response.status_code == 200:
+        return TimelineDto(**response.json())
+    else:
+        print(f"Error {response.status_code}: {response.text}")
+        return None
 
 
 def get_account_by_puuid(puuid: str) -> AccountDTO:
