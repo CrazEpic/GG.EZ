@@ -1,5 +1,5 @@
 export default defineEventHandler(async (event) => {
-	const { RIOT_API_KEY } = useRuntimeConfig(event)
+	const { RIOT_API_KEY } = useRuntimeConfig()
 	const query = getQuery(event)
 	const gameName = query.gameName as string
 	const tagLine = query.tagLine as string
