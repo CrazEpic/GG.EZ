@@ -8,8 +8,4 @@ export default defineNuxtConfig({
 		plugins: [tailwindcss()],
 	},
 	modules: ["@pinia/nuxt"],
-	runtimeConfig: {
-		RIOT_API_KEY: "",
-		public: {},
-	},
 })
