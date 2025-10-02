@@ -9,7 +9,7 @@ export default defineNuxtConfig({
 	},
 	modules: ["@pinia/nuxt"],
 	runtimeConfig: {
-		RIOT_API_KEY: process.env.NUXT_RIOT_API_KEY || "missing",
+		RIOT_API_KEY: "",
 		public: {},
 	},
 })
