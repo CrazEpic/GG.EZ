@@ -4,7 +4,7 @@ from development.riot_models import LeagueEntryDTO, AccountDTO, SummonerDTO, Mat
 from typing import List, Optional, Literal
 
 
-RIOT_API_KEY = os.getenv("RIOT_API_KEY")
+RIOT_API_KEY = os.getenv("NUXT_RIOT_API_KEY")
 
 america_server = "https://americas.api.riotgames.com"
 na_server = "https://na1.api.riotgames.com"
