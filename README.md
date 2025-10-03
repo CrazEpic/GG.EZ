@@ -1,1 +1,1 @@
-# Rift-Rewind-Hackathon
+# GG.EZ
