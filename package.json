@@ -15,6 +15,7 @@
 		"@tailwindcss/vite": "^4.1.13",
 		"nuxt": "^4.1.2",
 		"pinia": "^3.0.3",
+		"pm2": "^6.0.13",
 		"radix-ui": "^1.4.3",
 		"tailwindcss": "^4.1.13",
 		"vue": "^3.5.22",
