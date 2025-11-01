@@ -11,10 +11,14 @@
 		"format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json|vue)\""
 	},
 	"dependencies": {
+		"@heroicons/vue": "^2.2.0",
 		"@pinia/nuxt": "^0.11.2",
 		"@tailwindcss/vite": "^4.1.13",
+		"gsap": "^3.13.0",
 		"nuxt": "^4.1.2",
 		"pinia": "^3.0.3",
+		"pixi-viewport": "^6.0.3",
+		"pixi.js": "^8.14.0",
 		"pm2": "^6.0.13",
 		"radix-ui": "^1.4.3",
 		"tailwindcss": "^4.1.13",
