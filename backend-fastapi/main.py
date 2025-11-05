@@ -16,12 +16,12 @@ app = FastAPI()
 queue = QueueManager()
 
 # workers for queue
-num_workers = 3
+num_workers = 10
 
 # params for fetching data
 startTime = int(datetime(2025, 1, 1, tzinfo=timezone.utc).timestamp()) # unix timestamp for 1/1/2025
 endTime = int(datetime(2025, 11, 1, tzinfo=timezone.utc).timestamp()) # unix timestamp for 11/1/2025
-count = 5 # number of matches per page fetch
+count = 100 # number of matches per page fetch
 
 # from https://developer.riotgames.com/apis#match-v5
 # The AMERICAS routing value serves NA, BR, LAN and LAS.

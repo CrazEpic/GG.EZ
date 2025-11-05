@@ -93,7 +93,7 @@ class QueueManager:
         print(f"Worker {worker_id} started")
         await self.start_session()
         while True:
-            await asyncio.sleep(3) # the sleeping dragon 🐉🐉🐉🐉🐉
+            await asyncio.sleep(13) # the sleeping dragon 🐉🐉🐉🐉🐉
             _, job_id = await self.redis.blpop(self.queue_name)
             job_id = job_id.decode()
             job = await self.get_job(job_id)
@@ -182,16 +182,21 @@ class QueueManager:
         puuid = account_data.get("puuid")
         if not puuid:
             raise Exception(f"Error retrieving puuid")
-        params = job.params.copy()
-        params.update({
-            "puuid": puuid,
-            "parent_job_id": job.id 
-        })
-        routing = params.get("routing")
+        
+        routing = job.params.get("routing")
         endpoint = f"https://{routing}.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids"
-        new_job = Job(type=JobType.FETCH_MATCHES, endpoint=endpoint, params=params)
-        print(f"Branching to new job (matches) from parent {job.id}")
-        await self.enqueue_child_job(job.id, new_job)
+
+        queues = {400, 420, 430, 440, 450, 490}
+        for queue in queues:
+            params = job.params.copy()
+            params.update({
+                "puuid": puuid,
+                "parent_job_id": job.id,
+                "queue": queue 
+            })
+            new_job = Job(type=JobType.FETCH_MATCHES, endpoint=endpoint, params=params)
+            print(f"Branching to new job (matches; {queue=}) from parent {job.id}")
+            await self.enqueue_child_job(job.id, new_job)
 
     async def process_fetch_matches(self, job: Job, data: list):
         # expect a list from match endpoint
