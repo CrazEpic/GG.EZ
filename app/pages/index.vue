@@ -2,7 +2,14 @@
 	<div class="flex flex-col relative">
 		<LandingScreen v-if="modalType == 'LANDING_SCREEN'" @close_modal="closeModal" class="absolute top-0 left-0 w-full h-full z-10"></LandingScreen>
 		<FreljordModal v-if="modalType == 'FRELJORD'" @close_modal="closeModal" class="absolute top-0 left-0 w-full h-full z-10"></FreljordModal>
-		<MapCanvas @change_modal="(modal) => {modalType = modal}" class="grow"></MapCanvas>
+		<MapCanvas
+			@change_modal="
+				(modal) => {
+					modalType = modal
+				}
+			"
+			class="grow"
+		></MapCanvas>
 	</div>
 </template>
 
