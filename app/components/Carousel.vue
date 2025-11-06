@@ -1,18 +1,18 @@
 <template>
 	<div class="relative w-full overflow-hidden">
-		<div class="flex">
-			<div v-for="(card, index) in displayCards" :key="index" class="flex-shrink-0 p-2" :style="{ width: `${100 / 3}%` }">
-				<div class="bg-white text-center border">
+		<div class="flex justify-center space-x-4">
+			<div v-for="(card, index) in displayCards" :key="index" class="flex-shrink-0 p-2" :style="{ width: `${100 / 6}%` }">
+				<div class="bg-black text-center border h-90">
 					<component :is="card" />
 				</div>
 			</div>
 		</div>
 
 		<button v-if="totalCards > 3" @click="prevSlide" class="absolute left-2 top-1/2 -translate-y-1/2">
-			<ChevronLeftIcon class="stroke-black stroke-2 size-8" />
+			<ChevronLeftIcon class="stroke-white stroke-2 size-8" />
 		</button>
 		<button v-if="totalCards > 3" @click="nextSlide" class="absolute right-2 top-1/2 -translate-y-1/2">
-			<ChevronRightIcon class="stroke-black stroke-2 size-8" />
+			<ChevronRightIcon class="stroke-white stroke-2 size-8" />
 		</button>
 	</div>
 </template>

@@ -3,5 +3,26 @@
 
 @theme {
 	--color-freljord-primary: #3a8dde;
+    --color-freljord-secondary:#061B2E;
+    --color-noxus-primary:#9B1C1C;
+    --color-noxus-secondary:#0A0A0A;
+    --color-ionia-primary:#A83C78;
+    --color-ionia-secondary:#1A0E14;
+    --color-bilgewater-primary:#1F5C4C;
+    --color-bilgewater-secondary:#0A1E1C;
+    --color-shadowIsles-primary:#13433F;
+    --color-shadowIsles-secondary:#040C0B;
+    --color-piltover-primary:#C8A259;
+    --color-piltover-secondary:#1B1B1B;
+    --color-zaun-primary:#4CAF50;
+    --color-zaun-secondary:#0C1A0D;
+    --color-ixtal-primary:#1E6F5C;
+    --color-ixtal-secondary:#071F15;
+    --color-shurima-primary:#C7A045;
+    --color-shurima-secondary:#241C09;
+    --color-targon-primary:#3E3A8F;
+    --color-targon-secondary:#0A0A1F;
+    --color-demacia-primary:#3D5FA3;
+    --color-demacia-secondary:#101826;
 	--font-cinzel: "Cinzel", serif;
 }

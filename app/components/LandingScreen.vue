@@ -1,5 +1,6 @@
 <template>
 	<div style="background-color: rgba(0, 0, 0, 0.75)">
+		<Header class="sticky top-0"></Header>
 		<p class="text-white">
 			GG.EZ was created under Riot Games' "Legal Jibber Jabber" policy using assets owned by Riot Games. Riot Games does not endorse or sponsor this
 			project.
