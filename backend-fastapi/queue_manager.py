@@ -29,7 +29,7 @@ mappings = {
 }
 
 class QueueManager:
-    def __init__(self, redis_url="redis://default:lWmZr5krw5ZN5DRQwMKjt2NYtTjqUXTH@redis-12425.c61.us-east-1-3.ec2.redns.redis-cloud.com:12425", queue_name="jobs", max_retries: int = 3):
+    def __init__(self, redis_url="INSERT_URL_HERE", queue_name="jobs", max_retries: int = 3):
         self.redis = Redis.from_url(redis_url)
         self.queue_name = queue_name
         self.max_retries = max_retries
