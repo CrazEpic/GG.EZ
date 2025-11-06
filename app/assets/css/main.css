@@ -1,1 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap");
 @import "tailwindcss";
+
+@theme {
+	--color-freljord-primary: #3a8dde;
+	--font-cinzel: "Cinzel", serif;
+}
