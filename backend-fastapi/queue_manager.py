@@ -1,32 +1,8 @@
-import asyncio, random, time, aiohttp, aiofiles
-import os, json
+import asyncio, random, time, aiohttp, aiofiles, os, json
 from typing import Optional
 from redis.asyncio import Redis
 from models import Job, JobStatus, JobType
 from pathlib import Path
-
-# from https://developer.riotgames.com/apis#match-v5
-# The AMERICAS routing value serves NA, BR, LAN and LAS.
-# The ASIA routing value serves KR and JP. 
-# The EUROPE routing value serves EUNE, EUW, ME1, TR and RU.
-# The SEA routing value serves OCE, SG2, TW2 and VN2.
-mappings = {
-    "na1": "americas",
-    "br1": "americas",
-    "la1": "americas",
-    "la2": "americas",
-    "kr": "asia",
-    "jp1": "asia",
-    "eun1": "europe",
-    "euw1": "europe",
-    "me1": "europe",
-    "tr1": "europe",
-    "ru": "europe",
-    "oc1": "sea",
-    "sg2": "sea",
-    "tw2": "sea",
-    "vn2": "sea",
-}
 
 class QueueManager:
     def __init__(self, redis_url="redis://localhost:6379/0", queue_name="jobs", max_retries: int = 3):
@@ -58,38 +34,14 @@ class QueueManager:
 
         await self.redis.rpush(queue_name, job.id)
 
-    async def enqueue_child_job(self, parent_job_id: str, child_job: Job):
-        await self.redis.sadd(f"jobs_for:{parent_job_id}", child_job.id)
-        await self.enqueue(child_job)
-
+    # yea i don't know what to do here
     async def mark_job_complete(self, job: Job):
-        parent_job_id = job.params.get("parent_job_id")
-        if parent_job_id:
-            # remove from parent's set
-            await self.redis.srem(f"jobs_for:{parent_job_id}", job.id)
-            remaining = await self.redis.scard(f"jobs_for:{parent_job_id}")
-            if remaining == 0:
-                # all children done, mark the parent as success
-                parent_job = await self.get_job(parent_job_id)
-                if parent_job and parent_job.status != JobStatus.SUCCESS:
-                    parent_job.status = JobStatus.SUCCESS
-                    await self.update_job(parent_job)
-                
-                if parent_job.type != JobType.FETCH_ACCOUNT_DATA:
-                    await self.redis.delete(f"job:{parent_job_id}")
-                    await self.redis.delete(f"jobs_for:{parent_job_id}")
-                    #print(f"Deleted job:{parent_job_id} and jobs_for:{parent_job_id}")
-                else:
-                    await self.redis.expire(f"job:{parent_job_id}", 3600)
-                    #print(f"Set TTL of 1 hour on parent job {parent_job_id}")
-
-        if job.status == JobStatus.SUCCESS:
-            if job.type != JobType.FETCH_ACCOUNT_DATA:
-                await self.redis.delete(f"job:{job.id}")
-                #print(f"Deleted job {job.id}")
-            else:
-                await self.redis.expire(f"job:{job.id}", 3600)
-                #print(f"Set TTL of 1 hour on job {job.id}")
+        job.status = JobStatus.SUCCESS if job.status == JobStatus.RUNNING else JobStatus.FAILED
+        print(f"Job {job.id} {job.type.value} complete ({job.status.value})")
+        if job.type != JobType.FETCH_ACCOUNT_DATA:
+            await self.redis.delete(f"job:{job.id}")
+        else:
+            await self.redis.expire(f"job:{job.id}", 3600)
 
     async def get_job(self, job_id: str) -> Optional[Job]:
         data = await self.redis.hgetall(f"job:{job_id}")
@@ -115,11 +67,12 @@ class QueueManager:
         await self.start_session()
         while True:
             await asyncio.sleep(12.5) # the sleeping dragon 🐉🐉🐉🐉🐉
-            await self.redis.ping()
+
             result = await self.redis.blpop([f"{self.queue_name}:high", f"{self.queue_name}:normal"])
             if not result:
                 continue
             _, job_id = result
+
             job_id = job_id.decode()
             job = await self.get_job(job_id)
             if not job:
@@ -132,7 +85,6 @@ class QueueManager:
                 # attempt to process job
                 print(f"Worker {worker_id} processing job {job.id} {job.type.value}")
                 await self.process_job(job)
-                job.status = JobStatus.SUCCESS
             except Exception as e:
                 job.last_error = str(e)
                 job.retries += 1
@@ -179,20 +131,7 @@ class QueueManager:
 
         # store data somewhere
         if job.type in {JobType.FETCH_TIMELINE, JobType.FETCH_MATCH_DATA}:
-            data_dir = Path(f"{job.params["gameName"]}#{job.params["tagLine"]}/data/raw")
-            matchId = job.params.get("matchId")
-            sub_dir = "timeline" if job.type == JobType.FETCH_TIMELINE else "match_data"
-
-            folder_path = data_dir / sub_dir
-            os.makedirs(folder_path, exist_ok=True)
-
-            file_name = f"{matchId}.json"
-            file_path = folder_path / file_name
-
-            async with aiofiles.open(file_path, "w", encoding="utf-8") as f:
-                await f.write(json.dumps(data, ensure_ascii=False, indent=4))
-
-            job.response_data = {"file_path": file_path.as_posix()}
+            await self.save_raw_data(job, data)
         elif job.type == JobType.FETCH_ACCOUNT_DATA:
             await self.process_fetch_account_data(job, data)
             job.response_data = data
@@ -201,10 +140,24 @@ class QueueManager:
             job.response_data = data
         else:
             job.response_data = data
+
+    async def save_raw_data(self, job: Job, data: dict):
+        data_dir = Path(f"{job.params["gameName"]}#{job.params["tagLine"]}/data/raw")
+        matchId = job.params.get("matchId")
+        sub_dir = "timeline" if job.type == JobType.FETCH_TIMELINE else "match_data"
+
+        folder_path = data_dir / sub_dir
+        os.makedirs(folder_path, exist_ok=True)
+
+        file_name = f"{matchId}.json"
+        file_path = folder_path / file_name
+
+        async with aiofiles.open(file_path, "w", encoding="utf-8") as f:
+            await f.write(json.dumps(data, ensure_ascii=False, indent=4))
         
-        job.status = JobStatus.SUCCESS
-        await self.update_job(job)
-        await self.mark_job_complete(job)
+        await self.redis.sadd("processed_matches", matchId)
+
+        job.response_data = {"file_path": file_path.as_posix()}
 
     async def process_fetch_account_data(self, job: Job, data: dict):
         # expect a dict from account endpoint
@@ -223,6 +176,11 @@ class QueueManager:
         routing = job.params.get("routing")
         endpoint = f"https://{routing}.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids"
 
+        parent_set_key = f"parent:{job.id}:all_match_ids"
+        active_key = f"parent:{job.id}:active_fetch_matches"
+        await self.redis.delete(parent_set_key)
+        await self.redis.delete(active_key)
+
         queues = {400, 420, 430, 440, 490}
         for queue in queues:
             params = job.params.copy()
@@ -230,12 +188,16 @@ class QueueManager:
                 "puuid": puuid,
                 "gameName": gameName,
                 "tagLine": tagLine,
-                "parent_job_id": job.id,
-                "queue": queue
+                "queue": queue,
+                "parent_job_id": job.id
             })
             new_job = Job(type=JobType.FETCH_MATCHES, endpoint=endpoint, params=params)
             print(f"Branching to new job (matches; {queue=}) from parent {job.id}")
-            await self.enqueue_child_job(job.id, new_job)
+            await self.enqueue(new_job)
+            await self.redis.sadd(active_key, new_job.id)
+        
+        job.status = JobStatus.RUNNING
+        await self.update_job(job)
 
     async def process_fetch_matches(self, job: Job, data: list):
         # expect a list from match endpoint
@@ -243,47 +205,68 @@ class QueueManager:
             raise Exception(f"Match IDs expected to be in a list, got {type(data)}")
         matchIds = data
 
+        parent_set_key = f"parent:{job.params.get("parent_job_id")}:all_match_ids"
+        active_key = f"parent:{job.params.get("parent_job_id")}:active_fetch_matches"
+        if data:
+            await self.redis.sadd(parent_set_key, *data)
+
         params = job.params.copy()
         routing = params.get("routing")
-        parent_job_id = params.get("parent_job_id")
-
-        parent_job = await self.get_job(parent_job_id)
-        if not parent_job:
-            raise Exception(f"Parent job {parent_job_id} not found")
-
-        # if "all_match_ids" not in parent_job.params:
-        #     parent_job.params["all_match_ids"] = []
-        
-        # parent_job.params["all_match_ids"].extend(matchIds)
-        # await self.update_job(parent_job)
 
         # enqueue fetch match data job for next page
-        if len(matchIds) == job.params.get("count", 100):
+        next_start = params.get("start", 0) + len(matchIds)
+        if len(matchIds) > 0:
             endpoint = job.endpoint
             params.update({
-                "start": job.params.get("start", 0) + job.params.get("count", 100),
-                "parent_job_id": parent_job_id
+                "start": next_start,
             })
+
             new_job = Job(type=JobType.FETCH_MATCHES, endpoint=endpoint, params=params)
-            print(f"Branching to new job (matches) from parent {parent_job_id}")
-            await self.enqueue_child_job(parent_job_id, new_job)
-        else:
-            # all_matches = parent_job.params["all_match_ids"]
-            # matchIds = random.sample(all_matches, min(30, len(all_matches))) # randomly pick at most 30 games
+            print(f"Branching to new job (matches) from {job.id}")
+            await self.enqueue(new_job)
+            await self.redis.sadd(active_key, new_job.id)
+
+        await self.redis.srem(active_key, job.id)
+        remaining = await self.redis.scard(active_key)
+        if remaining == 0:
+            parent_job_id = job.params.get("parent_job_id")
+            parent_job = await self.get_job(parent_job_id)
+            sample_size = parent_job.params.get("sample_size", 0)
+            all_match_ids = await self.redis.smembers(parent_set_key)
+            all_match_ids = [matchId.decode() if isinstance(matchId, bytes) else matchId for matchId in all_match_ids]
+
+            if sample_size and sample_size < len(all_match_ids):
+                matchIds = random.sample(all_match_ids, sample_size)
+            else:
+                matchIds = all_match_ids
+
             for matchId in matchIds:
                 if await self.redis.sismember("processed_matches", matchId):
                     print(f"Skipping processed match {matchId}")
                     continue
-                await self.redis.sadd("processed_matches", matchId)
+
                 match_data_endpoint = f"https://{routing}.api.riotgames.com/lol/match/v5/matches/{matchId}"
-                params.update({
+                match_data_params = params.copy()
+                match_data_params.update({
                     "matchId": matchId,
-                    "parent_job_id": parent_job_id
                 })
+
                 timeline_endpoint = f"{match_data_endpoint}/timeline"
-                match_data_job = Job(type=JobType.FETCH_MATCH_DATA, endpoint=match_data_endpoint, params=params)
-                timeline_job = Job(type=JobType.FETCH_TIMELINE, endpoint=timeline_endpoint, params=params)
-                print(f"Branching to new job (match data) from parent {parent_job_id}")
-                await self.enqueue_child_job(parent_job_id, match_data_job)
-                print(f"Branching to new job (timeline) from parent {parent_job_id}")
-                await self.enqueue_child_job(parent_job_id, timeline_job)
+                timeline_params = params.copy()
+                timeline_params.update({
+                    "matchId": matchId,
+                })
+
+                match_data_job = Job(type=JobType.FETCH_MATCH_DATA, endpoint=match_data_endpoint, params=match_data_params)
+                timeline_job = Job(type=JobType.FETCH_TIMELINE, endpoint=timeline_endpoint, params=timeline_params)
+                print(f"Branching to new job (match data) from {job.id}")
+                await self.enqueue(match_data_job)
+                print(f"Branching to new job (timeline) from {job.id}")
+                await self.enqueue(timeline_job)
+            
+            await self.redis.delete(parent_set_key)
+            await self.redis.delete(active_key)
+        
+        job.status = JobStatus.SUCCESS
+        await self.update_job(job)
+        return
