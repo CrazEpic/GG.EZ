@@ -1,17 +1,27 @@
 <template>
-	<div class="w-full h-full bg-freljord-secondary font-cinzel text-center">
+	<div class="w-full h-full bg-ionia-secondary font-cinzel text-center">
+		<RegionOverlayTitle v-bind="ioniaData" />
 		<div style="width: 800px"><canvas ref="radarContainer"></canvas></div>
-		<Continue v-bind="freljordContinue" @close_modal="$emit('close_modal')" />
+		<Continue v-bind="ioniaContinue" @close_modal="$emit('close_modal')" />
 	</div>
 </template>
 
 <script setup lang="ts">
 const chartContainer = useTemplateRef("radarContainer")
+import RegionOverlayTitle from "./RegionOverlayTitle.vue"
 import { Chart, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend } from "chart.js/auto"
 
-const freljordContinue = {
-	bgColor: "bg-freljord-secondary",
-	borderColor: "border-freljord-primary",
+const ioniaData = {
+	backdropImage: "/region-backdrop/ioniabackdrop.png",
+	title: "The ionia",
+	description: "Survival Through Unity and Strength",
+	bgColor: "bg-ionia-secondary",
+	borderColor: "border-ionia-primary",
+}
+
+const ioniaContinue = {
+	bgColor: "bg-ionia-secondary",
+	borderColor: "border-ionia-primary",
 	continueText: "YOU ENDURED THE FROST",
 	buttonText: "Continue Your Journey",
 }
