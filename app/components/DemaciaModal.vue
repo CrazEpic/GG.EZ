@@ -20,7 +20,7 @@ const demaciaData = {
 const demaciaContinue = {
 	bgColor: 'bg-demacia-secondary',
     borderColor : 'border-demacia-primary',
-    continueText: 'YOU ENDURED THE FROST',
+    continueText: "YOU'VE ENDURED THE FROST",
     buttonText: 'Continue Your Journey',
 }
 // network fetching

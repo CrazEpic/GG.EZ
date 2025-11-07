@@ -16,7 +16,7 @@ import Continue from "./Continue.vue"
 const ixtalData = {
 	backdropImage: "/region-backdrop/ixtalbackdrop.png",
 	title: "The ixtal",
-	description: "Survival Through Unity and Strength",
+	description: "Where Sight Pierces the Jungle's Veil",
 	bgColor: "bg-ixtal-secondary",
 	borderColor: "border-ixtal-primary",
 }
@@ -24,12 +24,12 @@ const ixtalData = {
 const ixtalStats = {
 	borderColor: 'border-ixtal-primary',
     stats: [
-		{title: 'Damage Taken', value: 'Total (physical, magic, true)'},
-		{title: '% of Team Damage Soaked', value: 'Average'},
-		{title: 'damageSelfMitigated', value: 'total'},
-		{title: 'totalHeal', value: 'Total, totalHealsOnTeammates → Total'},
-		{title: 'avg survivalRatio', value: '1:2'},
-		{title: 'max timePlayed', value: '100 mins'},
+		{title: 'avg visionScorePerMinute', value: 'average'},
+		{title: 'total pings', value: 'number'},
+		{title: 'total objectivesStolen', value: 'total'},
+		{title: 'avg JungleShare (as jungler)', value: 'avg'},
+		{title: 'total wards killed', value: 'number'},
+		{title: 'total wards placed', value: 'number'},
 	]
 }
 
@@ -43,7 +43,7 @@ const ixtalAchievements = {
 const ixtalContinue = {
 	bgColor: 'bg-ixtal-secondary',
     borderColor : 'border-ixtal-primary',
-    continueText: 'YOU ENDURED THE FROST',
+    continueText: "YOU'VE MASTERED THE WILDERNESS",
     buttonText: 'Continue Your Journey',
 }
 // network fetching

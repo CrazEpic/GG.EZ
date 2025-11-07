@@ -16,7 +16,7 @@ import Continue from "./Continue.vue"
 const noxusData = {
 	backdropImage: "/region-backdrop/noxusbackdrop.png",
 	title: "The noxus",
-	description: "Survival Through Unity and Strength",
+	description: "Strength Through Might and Conquest",
 	bgColor: "bg-noxus-secondary",
 	borderColor: "border-noxus-primary",
 }
@@ -24,12 +24,12 @@ const noxusData = {
 const noxusStats = {
 	borderColor: 'border-noxus-primary',
     stats: [
-		{title: 'Damage Taken', value: 'Total (physical, magic, true)'},
-		{title: '% of Team Damage Soaked', value: 'Average'},
-		{title: 'damageSelfMitigated', value: 'total'},
-		{title: 'totalHeal', value: 'Total, totalHealsOnTeammates → Total'},
-		{title: 'avg survivalRatio', value: '1:2'},
-		{title: 'max timePlayed', value: '100 mins'},
+		{title: 'totalDamageDealt', value: '(physical, magic, true)'},
+		{title: 'avg percentTeamDamage', value: '%'},
+		{title: 'first bloodkill %+ total kills + assist', value: '% number'},
+		{title: 'avg kda', value: '3.0'},
+		{title: 'total double + triple + quadra + pentakills', value: '1,2,3,4'},
+		{title: 'largestKillingSpree', value: '30'},
 	]
 }
 
@@ -43,7 +43,7 @@ const noxusAchievements = {
 const noxusContinue = {
 	bgColor: 'bg-noxus-secondary',
     borderColor : 'border-noxus-primary',
-    continueText: 'YOU ENDURED THE FROST',
+    continueText: "YOU'VE PROVED YOUR STRENGTH",
     buttonText: 'Continue Your Journey',
 }
 // network fetching

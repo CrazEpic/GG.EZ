@@ -1,6 +1,6 @@
 <template>
-	<div class="w-full h-48 overflow-hidden brightness-70">
-		<img :src="backdropImage" />
+	<div class="h-48 flex overflow-hidden brightness-70">
+		<img :src="backdropImage" class="object-cover grow"/>
 	</div>
 	<div :class="['px-16', bgColor]">
 		<p class="text-white text-4xl mt-8">{{ title }}</p>

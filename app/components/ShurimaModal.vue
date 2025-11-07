@@ -16,7 +16,7 @@ import Continue from "./Continue.vue"
 const shurimaData = {
 	backdropImage: "/region-backdrop/shurimabackdrop.png",
 	title: "The shurima",
-	description: "Survival Through Unity and Strength",
+	description: "Reclaim Legacy Through Structure and Dominion",
 	bgColor: "bg-shurima-secondary",
 	borderColor: "border-shurima-primary",
 }
@@ -24,12 +24,12 @@ const shurimaData = {
 const shurimaStats = {
 	borderColor: 'border-shurima-primary',
     stats: [
-		{title: 'Damage Taken', value: 'Total (physical, magic, true)'},
-		{title: '% of Team Damage Soaked', value: 'Average'},
-		{title: 'damageSelfMitigated', value: 'total'},
-		{title: 'totalHeal', value: 'Total, totalHealsOnTeammates → Total'},
-		{title: 'avg survivalRatio', value: '1:2'},
-		{title: 'max timePlayed', value: '100 mins'},
+		{title: 'total turretKills', value: 'Total'},
+		{title: 'dragonKills, baronKills, atakahn, rifthereald', value: 'Number'},
+		{title: 'avg ObjectiveParticipation (so structures and jungle bosses)', value: 'avg'},
+		{title: 'firstTowerKill, firstDragon, firstBaron, firstRiftHerald', value: 'num'},
+		{title: 'total damageDealtToObjectives', value: 'total'},
+		{title: 'total damageDealtToStructures', value: 'total'},
 	]
 }
 
@@ -43,7 +43,7 @@ const shurimaAchievements = {
 const shurimaContinue = {
 	bgColor: 'bg-shurima-secondary',
     borderColor : 'border-shurima-primary',
-    continueText: 'YOU ENDURED THE FROST',
+    continueText: "YOU'VE EARNED YOUR ASCENSION",
     buttonText: 'Continue Your Journey',
 }
 // network fetching

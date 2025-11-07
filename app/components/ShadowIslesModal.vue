@@ -16,7 +16,7 @@ import Continue from "./Continue.vue"
 const shadowIslesData = {
 	backdropImage: "/region-backdrop/shadowIslesbackdrop.png",
 	title: "The shadowIsles",
-	description: "Survival Through Unity and Strength",
+	description: "Tenacity Forged in the Black Mist",
 	bgColor: "bg-shadowIsles-secondary",
 	borderColor: "border-shadowIsles-primary",
 }
@@ -24,12 +24,12 @@ const shadowIslesData = {
 const shadowIslesStats = {
 	borderColor: 'border-shadowIsles-primary',
     stats: [
-		{title: 'Damage Taken', value: 'Total (physical, magic, true)'},
-		{title: '% of Team Damage Soaked', value: 'Average'},
-		{title: 'damageSelfMitigated', value: 'total'},
-		{title: 'totalHeal', value: 'Total, totalHealsOnTeammates → Total'},
-		{title: 'avg survivalRatio', value: '1:2'},
-		{title: 'max timePlayed', value: '100 mins'},
+		{title: 'total deaths + totalTimeSpentDead', value: 'number'},
+		{title: 'death ratio', value: 'ratio'},
+		{title: 'death heatmap', value: '?'},
+		{title: 'gameEndedInSurrender', value: 'number'},
+		{title: 'maxDeathsInSingleGame', value: '30'},
+		{title: 'total revenge kills', value: 'number'},
 	]
 }
 
@@ -43,7 +43,7 @@ const shadowIslesAchievements = {
 const shadowIslesContinue = {
 	bgColor: 'bg-shadowIsles-secondary',
     borderColor : 'border-shadowIsles-primary',
-    continueText: 'YOU ENDURED THE FROST',
+    continueText: "YOU'VE SURVIVED THE HARROWING",
     buttonText: 'Continue Your Journey',
 }
 // network fetching
