@@ -6,29 +6,12 @@ from models import Job, JobType
 from datetime import datetime, timezone
 import asyncio
 
-class EnqueueRequest(BaseModel):
-    type: JobType
-    region: str
-    gameName: str
-    tagLine: str
-
-app = FastAPI()
-queue = QueueManager()
-
-# workers for queue
-num_workers = 10
-
-# params for fetching data
-startTime = int(datetime(2025, 1, 5, tzinfo=timezone.utc).timestamp()) # unix timestamp for 1/5/2025
-endTime = int(datetime(2025, 11, 1, tzinfo=timezone.utc).timestamp()) # unix timestamp for 11/1/2025
-count = 100 # number of matches per page fetch
-
 # from https://developer.riotgames.com/apis#match-v5
 # The AMERICAS routing value serves NA, BR, LAN and LAS.
 # The ASIA routing value serves KR and JP. 
 # The EUROPE routing value serves EUNE, EUW, ME1, TR and RU.
 # The SEA routing value serves OCE, SG2, TW2 and VN2.
-mappings = {
+region_mappings = {
     "na1": "americas",
     "br1": "americas",
     "la1": "americas",
@@ -45,6 +28,24 @@ mappings = {
     "tw2": "sea",
     "vn2": "sea",
 }
+class EnqueueRequest(BaseModel):
+    type: JobType
+    region: str
+    gameName: str
+    tagLine: str
+    matches_to_fetch: int
+
+app = FastAPI()
+queue = QueueManager()
+tasks = []
+
+# workers for queue
+num_workers = 10
+
+# params for fetching data
+startTime = int(datetime(2025, 1, 5, tzinfo=timezone.utc).timestamp()) # unix timestamp for 1/5/2025
+endTime = int(datetime(2025, 11, 1, tzinfo=timezone.utc).timestamp()) # unix timestamp for 11/1/2025
+count = 100 # number of matches per page fetch
 
 @app.get("/")
 def read_root():
@@ -54,11 +55,16 @@ def read_root():
 async def startup_event():
     await queue.start_session()
     for i in range(num_workers):
-        asyncio.create_task(queue.worker_loop(i + 1))
+        task = asyncio.create_task(queue.worker_loop(i + 1))
+        tasks.append(task)
 
+# apparently this is a safe way to stop the workers
 @app.on_event("shutdown")
 async def shutdown_event():
     await queue.close_session()
+    for task in tasks:
+        task.cancel()
+    await asyncio.gather(*tasks, return_exceptions=True)
 
 # enqueue fetch account data here using the region, game name, and tag line
 # check job status using the job id returned here and the get_status endpoint
@@ -70,7 +76,7 @@ async def enqueue(request: EnqueueRequest):
         raise HTTPException(400, f"Invalid job type: {request}; expected {JobType.FETCH_ACCOUNT_DATA}")
     
     region = request.region.lower()
-    routing = mappings.get(region)
+    routing = region_mappings.get(region)
     gameName = request.gameName
     tagLine = request.tagLine
     endpoint = None
@@ -78,11 +84,8 @@ async def enqueue(request: EnqueueRequest):
     if not gameName or not tagLine:
         raise HTTPException(400, f"Invalid gameName and/or tagLine: {gameName=}, {tagLine=}")
     
-    if routing == "sea":
-        temp_routing = "asia"
-        endpoint = f"https://{temp_routing}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{request.gameName}/{request.tagLine}"
-    else:
-        endpoint = f"https://{routing}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{request.gameName}/{request.tagLine}"       
+    temp_routing = "asia" if routing == "sea" else routing
+    endpoint = f"https://{temp_routing}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{request.gameName}/{request.tagLine}" 
     params = {
         "region": region,
         "routing": routing,
@@ -91,7 +94,8 @@ async def enqueue(request: EnqueueRequest):
         "startTime": startTime,
         "endTime": endTime,
         "start": 0,
-        "count": count
+        "count": count,
+        "sample_size": request.matches_to_fetch
     }
 
     job = Job(type=request.type, endpoint=endpoint, params=params)
