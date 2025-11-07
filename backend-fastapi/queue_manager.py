@@ -29,7 +29,7 @@ mappings = {
 }
 
 class QueueManager:
-    def __init__(self, redis_url="INSERT_URL_HERE", queue_name="jobs", max_retries: int = 3):
+    def __init__(self, redis_url="redis://localhost:6379/0", queue_name="jobs", max_retries: int = 3):
         self.redis = Redis.from_url(redis_url)
         self.queue_name = queue_name
         self.max_retries = max_retries
@@ -156,7 +156,11 @@ class QueueManager:
         await asyncio.sleep(delay)
         updated = await self.get_job(job.id)
         if updated and updated.status == JobStatus.RETRYING:
-            await self.redis.rpush(self.queue_name, job.id)
+            if job.type in {JobType.FETCH_MATCH_DATA, JobType.FETCH_TIMELINE}:
+                queue_name = f"{self.queue_name}:high"
+            else:
+                queue_name = f"{self.queue_name}:normal"
+            await self.redis.rpush(queue_name, job.id)
 
     async def process_job(self, job: Job):
         if self.session is None:
