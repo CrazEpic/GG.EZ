@@ -2,6 +2,7 @@
 	<div class="flex flex-col relative">
 		<LandingScreen v-if="modalType == 'LANDING_SCREEN'" @close_modal="closeModal" class="absolute top-0 left-0 w-full h-full z-10"></LandingScreen>
 		<FreljordModal v-if="modalType == 'FRELJORD'" @close_modal="closeModal" class="absolute top-0 left-0 w-full h-full z-10"></FreljordModal>
+		<IoniaModel v-if="modalType == 'IONIA'" @close_modal="closeModal" class="absolute top-0 left-0 w-full h-full z-10"></IoniaModel>
 		<MapCanvas
 			@change_modal="
 				(modal) => {

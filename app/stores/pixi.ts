@@ -549,33 +549,33 @@ export const usePixiStore = defineStore("pixi", () => {
 						freljordRegion.visible = true
 						break
 					case "noxus":
-						changeModalEmit("change_modal", "FRELJORD")
+						changeModalEmit("change_modal", "NOXUS")
 
 						break
 					case "ionia":
-						changeModalEmit("change_modal", "FRELJORD")
+						changeModalEmit("change_modal", "IONIA")
 
 						break
 					case "bilgewater":
-						changeModalEmit("change_modal", "FRELJORD")
+						changeModalEmit("change_modal", "BILGEWATER")
 						break
 					case "shadow-isles":
-						changeModalEmit("change_modal", "FRELJORD")
+						changeModalEmit("change_modal", "SHADOW_ISLES")
 						break
 					case "piltover-zaun":
-						changeModalEmit("change_modal", "FRELJORD")
+						changeModalEmit("change_modal", "PILTOVER_ZAUN")
 						break
 					case "ixtal":
-						changeModalEmit("change_modal", "FRELJORD")
+						changeModalEmit("change_modal", "IXTAL")
 						break
 					case "shurima":
-						changeModalEmit("change_modal", "FRELJORD")
+						changeModalEmit("change_modal", "SHURIMA")
 						break
 					case "targon":
-						changeModalEmit("change_modal", "FRELJORD")
+						changeModalEmit("change_modal", "TARGON")
 						break
 					case "demacia":
-						changeModalEmit("change_modal", "FRELJORD")
+						changeModalEmit("change_modal", "DEMACIA")
 						break
 				}
 			}
