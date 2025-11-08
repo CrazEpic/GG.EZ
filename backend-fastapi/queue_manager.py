@@ -155,7 +155,7 @@ class QueueManager:
         async with aiofiles.open(file_path, "w", encoding="utf-8") as f:
             await f.write(json.dumps(data, ensure_ascii=False, indent=4))
         
-        await self.redis.sadd("processed_matches", matchId)
+        # await self.redis.sadd("processed_matches", matchId)
 
         job.response_data = {"file_path": file_path.as_posix()}
 
@@ -241,9 +241,9 @@ class QueueManager:
                 matchIds = all_match_ids
 
             for matchId in matchIds:
-                if await self.redis.sismember("processed_matches", matchId):
-                    print(f"Skipping processed match {matchId}")
-                    continue
+                # if await self.redis.sismember("processed_matches", matchId):
+                #     print(f"Skipping processed match {matchId}")
+                #     continue
 
                 match_data_endpoint = f"https://{routing}.api.riotgames.com/lol/match/v5/matches/{matchId}"
                 match_data_params = params.copy()

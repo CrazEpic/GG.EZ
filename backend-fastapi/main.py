@@ -28,6 +28,7 @@ region_mappings = {
     "tw2": "sea",
     "vn2": "sea",
 }
+
 class EnqueueRequest(BaseModel):
     type: JobType
     region: str
