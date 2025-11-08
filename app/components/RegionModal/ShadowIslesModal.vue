@@ -1,17 +1,13 @@
 <template>
 	<div class="w-full h-full bg-shadowIsles-secondary font-cinzel text-center">
-		<RegionOverlayTitle v-bind="shadowIslesData" />
-		<CardCollector v-bind="shadowIslesStats" />
-		<Achievements v-bind="shadowIslesAchievements" />
-		<Continue v-bind="shadowIslesContinue" @close_modal="$emit('close_modal')" />
+		<SmallerRegionSharedRegionOverlayTitle v-bind="shadowIslesData" />
+		<SmallerRegionSharedCardCollector v-bind="shadowIslesStats" />
+		<SmallerRegionSharedAchievements v-bind="shadowIslesAchievements" />
+		<SmallerRegionSharedContinue v-bind="shadowIslesContinue" @close_modal="$emit('close_modal')" />
 	</div>
 </template>
 
 <script setup lang="ts">
-import RegionOverlayTitle from "./RegionOverlayTitle.vue"
-import CardCollector from "./CardCollector.vue"
-import Achievements from "./Achievements.vue"
-import Continue from "./Continue.vue"
 
 const shadowIslesData = {
 	backdropImage: "/region-backdrop/shadowIslesbackdrop.png",

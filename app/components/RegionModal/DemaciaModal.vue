@@ -1,13 +1,11 @@
 <template>
 	<div class="w-full h-full bg-demacia-secondary font-cinzel text-center">
-		<RegionOverlayTitle v-bind="demaciaData" />
-		<Continue v-bind="demaciaContinue" @close_modal="$emit('close_modal')" />
+		<SmallerRegionSharedRegionOverlayTitle v-bind="demaciaData" />
+		<SmallerRegionSharedContinue v-bind="demaciaContinue" @close_modal="$emit('close_modal')" />
 	</div>
 </template>
 
 <script setup lang="ts">
-import RegionOverlayTitle from "./RegionOverlayTitle.vue"
-import Continue from "./Continue.vue"
 
 const demaciaData = {
 	backdropImage: "/region-backdrop/demaciabackdrop.png",

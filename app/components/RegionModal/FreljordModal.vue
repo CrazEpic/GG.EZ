@@ -1,17 +1,13 @@
 <template>
 	<div class="w-full h-full bg-freljord-secondary font-cinzel text-center">
-		<RegionOverlayTitle v-bind="freljordData" />
-		<CardCollector v-bind="freljordStats" />
-		<Achievements v-bind="freljordAchievements" />
-		<Continue v-bind="freljordContinue" @close_modal="$emit('close_modal')" />
+		<SmallerRegionSharedRegionOverlayTitle v-bind="freljordData" />
+		<SmallerRegionSharedCardCollector v-bind="freljordStats" />
+		<SmallerRegionSharedAchievements v-bind="freljordAchievements" />
+		<SmallerRegionSharedContinue v-bind="freljordContinue" @close_modal="$emit('close_modal')" />
 	</div>
 </template>
 
 <script setup lang="ts">
-import RegionOverlayTitle from "./RegionOverlayTitle.vue"
-import CardCollector from "./CardCollector.vue"
-import Achievements from "./Achievements.vue"
-import Continue from "./Continue.vue"
 
 const freljordData = {
 	backdropImage: "/region-backdrop/freljordbackdrop.png",

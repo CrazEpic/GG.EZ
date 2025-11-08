@@ -1,14 +1,13 @@
 <template>
 	<div class="w-full h-full bg-ionia-secondary font-cinzel text-center">
-		<RegionOverlayTitle v-bind="ioniaData" />
+		<SmallerRegionSharedRegionOverlayTitle v-bind="ioniaData" />
 		<div style="width: 800px"><canvas ref="radarContainer"></canvas></div>
-		<Continue v-bind="ioniaContinue" @close_modal="$emit('close_modal')" />
+		<SmallerRegionSharedContinue v-bind="ioniaContinue" @close_modal="$emit('close_modal')" />
 	</div>
 </template>
 
 <script setup lang="ts">
 const chartContainer = useTemplateRef("radarContainer")
-import RegionOverlayTitle from "./RegionOverlayTitle.vue"
 import { Chart, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend } from "chart.js/auto"
 
 const ioniaData = {

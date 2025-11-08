@@ -14,6 +14,7 @@ const props = defineProps({
 	},
 })
 
+const emit = defineEmits(["change_drawer"])
 const pixiContainer = useTemplateRef("championConstellationContainer")
 
 const app = ref<Application | null>(null)
@@ -61,22 +62,25 @@ const initPixi = async (container: HTMLElement) => {
 	vp.moveCenter(worldWidth / 2, worldHeight / 2)
 	viewport.value = vp
 
-	const championConstellationArtTexture = await Assets.load(`champion-constellation/${props.champion}.png`)
+	const championConstellationArtTexture = await Assets.load(`champion-constellation/${props.champion}_0.png`)
 	const championConstellationArt = vp.addChild(new Sprite(championConstellationArtTexture))
 	championConstellationArt.width = worldWidth
 	championConstellationArt.height = worldHeight
 
 	// stars
+	const newStarTexture = await Assets.load("stars/star1.png")
 	const starCoordinates = championsStarCoords[`${props.champion}`]
 	const edges = new Set()
 	const stars = {}
-	const starWidth = 50
-	const starHeight = 50
+	const starWidth = 20
+	const starHeight = 20
 	Object.keys(starCoordinates).forEach((starNumber) => {
-		const newStar = vp.addChild(new Sprite(Texture.WHITE))
+		const newStar = vp.addChild(new Sprite(newStarTexture))
 		newStar.width = starWidth
 		newStar.height = starHeight
 		newStar.label = starNumber
+		newStar.anchor.set(0.5)
+		newStar.scale.set(0.1)
 		newStar.x = starCoordinates[starNumber]["x"]
 		newStar.y = starCoordinates[starNumber]["y"]
 		stars[starNumber] = newStar
@@ -93,9 +97,70 @@ const initPixi = async (container: HTMLElement) => {
 		const [a, b] = edge.split("-")
 		const starA = stars[a]
 		const starB = stars[b]
-		edgeGraphics.moveTo(starA.x + starWidth / 2, starA.y + starHeight / 2)
-		edgeGraphics.lineTo(starB.x + starWidth / 2, starB.y + starHeight / 2)
-		edgeGraphics.stroke({ width: 10, color: 0xffffff }) // Finalize the line drawing
+		edgeGraphics.moveTo(starA.x, starA.y)
+		edgeGraphics.lineTo(starB.x, starB.y)
+		edgeGraphics.stroke({ width: 1, color: 0xffffff }) // Finalize the line drawing
+	})
+
+	vp.on("pointermove", (event) => {
+		const screen = event.global
+		const worldPoint = vp.toWorld(screen.x, screen.y)
+		const hoveredChildren = vp.children.find((child) => {
+			return (
+				Object.keys(starCoordinates).includes(child.label) &&
+				child.x - child.width/2 <= worldPoint.x &&
+				worldPoint.x <= child.x + child.width/2 &&
+				child.y - child.height/2 <= worldPoint.y &&
+				worldPoint.y <= child.y + child.height/2
+			)
+		})
+		if (hoveredChildren) {
+			switch (hoveredChildren.label){
+				case '1':
+					hoveredChildren.width = 30
+					hoveredChildren.height = 30
+					break
+				case '2':
+					hoveredChildren.width = 30
+					hoveredChildren.height = 30
+					break
+				case '3':
+					hoveredChildren.width = 30
+					hoveredChildren.height = 30
+					break
+				case '4':
+					hoveredChildren.width = 30
+					hoveredChildren.height = 30
+					break
+				case '5':
+					hoveredChildren.width = 30
+					hoveredChildren.height = 30
+					break
+				case '6':
+					hoveredChildren.width = 30
+					hoveredChildren.height = 30
+					break
+				case '7':
+					hoveredChildren.width = 30
+					hoveredChildren.height = 30
+					break
+			}
+		}else{
+			stars['1'].width = 20
+			stars['1'].height = 20
+			stars['2'].width = 20
+			stars['2'].height = 20
+			stars['3'].width = 20
+			stars['3'].height = 20
+			stars['4'].width = 20
+			stars['4'].height = 20
+			stars['5'].width = 20
+			stars['5'].height = 20
+			stars['6'].width = 20
+			stars['6'].height = 20
+			stars['7'].width = 20
+			stars['7'].height = 20
+		}
 	})
 
 	vp.on("pointerdown", (event) => {
@@ -104,14 +169,36 @@ const initPixi = async (container: HTMLElement) => {
 		const clickedChildren = vp.children.find((child) => {
 			return (
 				Object.keys(starCoordinates).includes(child.label) &&
-				child.x <= worldPoint.x &&
-				worldPoint.x <= child.x + child.width &&
-				child.y <= worldPoint.y &&
-				worldPoint.y <= child.y + child.height
+				child.x - child.width/2 <= worldPoint.x &&
+				worldPoint.x <= child.x + child.width/2 &&
+				child.y - child.height/2 <= worldPoint.y &&
+				worldPoint.y <= child.y + child.height/2
 			)
 		})
 		if (clickedChildren) {
-			console.log(clickedChildren.label)
+			switch(clickedChildren.label) {
+				case '1':
+				emit("change_drawer", "ABILITY")
+				break
+				case '2':
+				emit("change_drawer", "PLAYTIME")
+				break
+				case '3':
+				emit("change_drawer", "BUILD")
+				break
+				case '4':
+				emit("change_drawer", "GOLDGENERATING")
+				break
+				case '5':
+				emit("change_drawer", "KDADRAWER")
+				break
+				case '6':
+				emit("change_drawer", "MULTIKILLS")
+				break
+				case '7':
+				emit("change_drawer", "SUPERLATIVES")
+				break
+			}
 		}
 	})
 }
@@ -146,4 +233,18 @@ onBeforeUnmount(() => {
 	window.removeEventListener("wheel", handleWheel)
 	window.removeEventListener("touchmove", handleTouchMove)
 })
+
+	const focusOn = (x: number, y: number, modalCallback?: () => void) => {
+		if (!viewport.value) return
+		const screenW = viewport.value.screenWidth ?? app.value?.screen.width
+		const maxScale = screenW! / (worldWidth / 5)
+
+		viewport.value.animate({
+			time: 1000,
+			position: { x, y },
+			scale: maxScale,
+			ease: "easeInOutSine",
+			callbackOnComplete: modalCallback,
+		})
+	}
 </script>

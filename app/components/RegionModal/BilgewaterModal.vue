@@ -1,17 +1,13 @@
 <template>
 	<div class="w-full h-full bg-bilgewater-secondary font-cinzel text-center">
-		<RegionOverlayTitle v-bind="bilgewaterData" />
-		<CardCollector v-bind="bilgewaterStats" />
-		<Achievements v-bind="bilgewaterAchievements" />
-		<Continue v-bind="bilgewaterContinue" @close_modal="$emit('close_modal')" />
+		<SmallerRegionSharedRegionOverlayTitle v-bind="bilgewaterData" />
+		<SmallerRegionSharedCardCollector v-bind="bilgewaterStats" />
+		<SmallerRegionSharedAchievements v-bind="bilgewaterAchievements" />
+		<SmallerRegionSharedContinue v-bind="bilgewaterContinue" @close_modal="$emit('close_modal')" />
 	</div>
 </template>
 
 <script setup lang="ts">
-import RegionOverlayTitle from "./RegionOverlayTitle.vue"
-import CardCollector from "./CardCollector.vue"
-import Achievements from "./Achievements.vue"
-import Continue from "./Continue.vue"
 
 const bilgewaterData = {
 	backdropImage: "/region-backdrop/bilgewaterbackdrop.png",

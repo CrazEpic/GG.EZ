@@ -1,17 +1,13 @@
 <template>
 	<div class="w-full h-full bg-ixtal-secondary font-cinzel text-center">
-		<RegionOverlayTitle v-bind="ixtalData" />
-		<CardCollector v-bind="ixtalStats" />
-		<Achievements v-bind="ixtalAchievements" />
-		<Continue v-bind="ixtalContinue" @close_modal="$emit('close_modal')" />
+		<SmallerRegionSharedRegionOverlayTitle v-bind="ixtalData" />
+		<SmallerRegionSharedCardCollector v-bind="ixtalStats" />
+		<SmallerRegionSharedAchievements v-bind="ixtalAchievements" />
+		<SmallerRegionSharedContinue v-bind="ixtalContinue" @close_modal="$emit('close_modal')" />
 	</div>
 </template>
 
 <script setup lang="ts">
-import RegionOverlayTitle from "./RegionOverlayTitle.vue"
-import CardCollector from "./CardCollector.vue"
-import Achievements from "./Achievements.vue"
-import Continue from "./Continue.vue"
 
 const ixtalData = {
 	backdropImage: "/region-backdrop/ixtalbackdrop.png",

@@ -1,18 +1,13 @@
 <template>
 	<div class="w-full h-full bg-noxus-secondary font-cinzel text-center">
-		<RegionOverlayTitle v-bind="noxusData" />
-		<CardCollector v-bind="noxusStats" />
-		<Achievements v-bind="noxusAchievements" />
-		<Continue v-bind="noxusContinue" @close_modal="$emit('close_modal')" />
+		<SmallerRegionSharedRegionOverlayTitle v-bind="noxusData" />
+		<SmallerRegionSharedCardCollector v-bind="noxusStats" />
+		<SmallerRegionSharedAchievements v-bind="noxusAchievements" />
+		<SmallerRegionSharedContinue v-bind="noxusContinue" @close_modal="$emit('close_modal')" />
 	</div>
 </template>
 
 <script setup lang="ts">
-import RegionOverlayTitle from "./RegionOverlayTitle.vue"
-import CardCollector from "./CardCollector.vue"
-import Achievements from "./Achievements.vue"
-import Continue from "./Continue.vue"
-
 const noxusData = {
 	backdropImage: "/region-backdrop/noxusbackdrop.png",
 	title: "The noxus",

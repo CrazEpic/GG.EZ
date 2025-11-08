@@ -1,17 +1,13 @@
 <template>
 	<div class="w-full h-full bg-shurima-secondary font-cinzel text-center">
-		<RegionOverlayTitle v-bind="shurimaData" />
-		<CardCollector v-bind="shurimaStats" />
-		<Achievements v-bind="shurimaAchievements" />
-		<Continue v-bind="shurimaContinue" @close_modal="$emit('close_modal')" />
+		<SmallerRegionSharedRegionOverlayTitle v-bind="shurimaData" />
+		<SmallerRegionSharedCardCollector v-bind="shurimaStats" />
+		<SmallerRegionSharedAchievements v-bind="shurimaAchievements" />
+		<SmallerRegionSharedContinue v-bind="shurimaContinue" @close_modal="$emit('close_modal')" />
 	</div>
 </template>
 
 <script setup lang="ts">
-import RegionOverlayTitle from "./RegionOverlayTitle.vue"
-import CardCollector from "./CardCollector.vue"
-import Achievements from "./Achievements.vue"
-import Continue from "./Continue.vue"
 
 const shurimaData = {
 	backdropImage: "/region-backdrop/shurimabackdrop.png",
