@@ -20,12 +20,12 @@ const ixtalData = {
 const ixtalStats = {
 	borderColor: 'border-ixtal-primary',
     stats: [
-		{title: 'avg visionScorePerMinute', value: 'average'},
-		{title: 'total pings', value: 'number'},
-		{title: 'total objectivesStolen', value: 'total'},
-		{title: 'avg JungleShare (as jungler)', value: 'avg'},
-		{title: 'total wards killed', value: 'number'},
-		{title: 'total wards placed', value: 'number'},
+		{title: 'avg visionScorePerMinute', values: 'average'},
+		{title: 'total pings', values: 'number'},
+		{title: 'total objectivesStolen', values: 'total'},
+		{title: 'avg JungleShare (as jungler)', values: 'avg'},
+		{title: 'total wards killed', values: 'number'},
+		{title: 'total wards placed', values: 'number'},
 	]
 }
 

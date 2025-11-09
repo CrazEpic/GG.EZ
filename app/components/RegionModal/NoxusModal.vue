@@ -8,6 +8,15 @@
 </template>
 
 <script setup lang="ts">
+const playerDataStore = usePlayerDataStore()
+const avgPercentTeamDamage = playerDataStore.playerData?.sr.noxus_info.avg_team_damage_share
+const avgKDA = playerDataStore.playerData?.sr.noxus_info.avg_kda
+const totalDoublekills = playerDataStore.playerData?.sr.noxus_info.total_double_kills
+const totalTriplekills = playerDataStore.playerData?.sr.noxus_info.total_triple_kills
+const totalQuadrakills = playerDataStore.playerData?.sr.noxus_info.total_quadra_kills
+const totalPentakills = playerDataStore.playerData?.sr.noxus_info.total_penta_kills
+const largestKillingSpree = playerDataStore.playerData?.sr.noxus_info.highest_largest_killing_spree
+
 const noxusData = {
 	backdropImage: "/region-backdrop/noxusbackdrop.png",
 	title: "The noxus",
@@ -19,12 +28,12 @@ const noxusData = {
 const noxusStats = {
 	borderColor: 'border-noxus-primary',
     stats: [
-		{title: 'totalDamageDealt', value: '(physical, magic, true)'},
-		{title: 'avg percentTeamDamage', value: '%'},
-		{title: 'first bloodkill %+ total kills + assist', value: '% number'},
-		{title: 'avg kda', value: '3.0'},
-		{title: 'total double + triple + quadra + pentakills', value: '1,2,3,4'},
-		{title: 'largestKillingSpree', value: '30'},
+		{title: 'totalDamageDealt', values: '(physical, magic, true)'},
+		{title: 'avg percentTeamDamage', values: avgPercentTeamDamage},
+		{title: 'first bloodkill %+ total kills + assist', values: '% number'},
+		{title: 'avg kda', values: avgKDA},
+		{title: 'Multikills', values: {'Double kills': totalDoublekills, 'Triple kills': totalTriplekills, 'Quadra kills': totalQuadrakills, 'Penta kills': totalPentakills}},
+		{title: 'largestKillingSpree', values: largestKillingSpree},
 	]
 }
 

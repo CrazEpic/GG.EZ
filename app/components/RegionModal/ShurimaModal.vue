@@ -20,12 +20,12 @@ const shurimaData = {
 const shurimaStats = {
 	borderColor: 'border-shurima-primary',
     stats: [
-		{title: 'total turretKills', value: 'Total'},
-		{title: 'dragonKills, baronKills, atakahn, rifthereald', value: 'Number'},
-		{title: 'avg ObjectiveParticipation (so structures and jungle bosses)', value: 'avg'},
-		{title: 'firstTowerKill, firstDragon, firstBaron, firstRiftHerald', value: 'num'},
-		{title: 'total damageDealtToObjectives', value: 'total'},
-		{title: 'total damageDealtToStructures', value: 'total'},
+		{title: 'total turretKills', values: 'Total'},
+		{title: 'dragonKills, baronKills, atakahn, rifthereald', values: 'Number'},
+		{title: 'avg ObjectiveParticipation (so structures and jungle bosses)', values: 'avg'},
+		{title: 'firstTowerKill, firstDragon, firstBaron, firstRiftHerald', values: 'num'},
+		{title: 'total damageDealtToObjectives', values: 'total'},
+		{title: 'total damageDealtToStructures', values: 'total'},
 	]
 }
 

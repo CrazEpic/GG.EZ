@@ -20,12 +20,12 @@ const shadowIslesData = {
 const shadowIslesStats = {
 	borderColor: 'border-shadowIsles-primary',
     stats: [
-		{title: 'total deaths + totalTimeSpentDead', value: 'number'},
-		{title: 'death ratio', value: 'ratio'},
-		{title: 'death heatmap', value: '?'},
-		{title: 'gameEndedInSurrender', value: 'number'},
-		{title: 'maxDeathsInSingleGame', value: '30'},
-		{title: 'total revenge kills', value: 'number'},
+		{title: 'total deaths + totalTimeSpentDead', values: 'number'},
+		{title: 'death ratio', values: 'ratio'},
+		{title: 'death heatmap', values: '?'},
+		{title: 'gameEndedInSurrender', values: 'number'},
+		{title: 'maxDeathsInSingleGame', values: '30'},
+		{title: 'total revenge kills', values: 'number'},
 	]
 }
 

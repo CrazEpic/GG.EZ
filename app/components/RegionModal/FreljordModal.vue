@@ -17,17 +17,28 @@ const freljordData = {
 }
 
 const playerDataStore = usePlayerDataStore()
+const damageSelfMitigated = playerDataStore.playerData?.sr.freljord_info.total_damage_self_mitigated
+const totalPhysicalTaken = playerDataStore.playerData?.sr.freljord_info.total_physical_damage_taken
+const totalMagicTaken = playerDataStore.playerData?.sr.freljord_info.total_magic_damage_taken
+const totalTrueTaken = playerDataStore.playerData?.sr.freljord_info.total_true_damage_taken
+const totalHeal = playerDataStore.playerData?.sr.freljord_info.total_heal
+const totalHealsOnTeammates = playerDataStore.playerData?.sr.freljord_info.total_heals_on_teammates
+const avgSurvivalRatio = playerDataStore.playerData?.sr.freljord_info.avg_survival_ratio
+const timePlayed = playerDataStore.playerData?.sr.freljord_info.total_play_time
 const totalSnowballThrows = playerDataStore.playerData?.aram.freljord_info.total_snowball_throws
 const freljordStats = {
 	borderColor: "border-freljord-primary",
 	stats: [
-		{ title: "Damage Taken", value: "Total (physical, magic, true)" },
-		{ title: "% of Team Damage Soaked", value: "Average" },
-		{ title: "damageSelfMitigated", value: "total" },
-		{ title: "totalHeal", value: "Total, totalHealsOnTeammates → Total" },
-		{ title: "avg survivalRatio", value: "1:2" },
-		{ title: "max timePlayed", value: "100 mins" },
-		{ title: "total snowball throws", value: totalSnowballThrows ?? 0 },
+		{ 
+		title: "Damage Taken", 
+		values: { physical: totalPhysicalTaken, magic: totalMagicTaken, true: totalTrueTaken },
+		showGraph: true
+		},
+		{ title: "damageSelfMitigated", values: damageSelfMitigated },
+		{ title: "totalHeal", values: { "total healing": totalHeal, "heals on teammates": totalHealsOnTeammates } },
+		{ title: "avg survivalRatio", values: avgSurvivalRatio },
+		{ title: "max timePlayed", values: timePlayed },
+		{ title: "total snowball throws", values: totalSnowballThrows ?? 0 },
 	],
 }
 

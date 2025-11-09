@@ -20,12 +20,12 @@ const bilgewaterData = {
 const bilgewaterStats = {
 	borderColor: 'border-bilgewater-primary',
     stats: [
-		{title: 'total goldEarned', value: 'number'},
-		{title: 'top items', value: 'items'},
-		{title: 'avg cs per minute', value: 'number'},
-		{title: 'total shutdownBounty', value: 'number'},
-		{title: 'most gold in a single match', value: 'number'},
-		{title: 'most cs in a single match', value: 'number'},
+		{title: 'total goldEarned', values: 'number'},
+		{title: 'top items', values: 'items'},
+		{title: 'avg cs per minute', values: 'number'},
+		{title: 'total shutdownBounty', values: 'number'},
+		{title: 'most gold in a single match', values: 'number'},
+		{title: 'most cs in a single match', values: 'number'},
 	]
 }
 
