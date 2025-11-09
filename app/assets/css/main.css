@@ -1,7 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap");
 @import "tailwindcss";
 
+
+
 @theme {
+    --color-default-primary: #C28F2C;
+    --color-default-secondary: #111111;
 	--color-freljord-primary: #3a8dde;
     --color-freljord-secondary:#061B2E;
     --color-noxus-primary:#9B1C1C;
@@ -24,5 +28,7 @@
     --color-targon-secondary:#0A0A1F;
     --color-demacia-primary:#3D5FA3;
     --color-demacia-secondary:#101826;
-	--font-cinzel: "Cinzel", serif;
+    --font-serif: "Cinzel", serif;
+    --font-sans: "Cinzel", Arial, sans-serif;
+    --font-mono: "Cinzel", "Courier New", monospace;
 }

@@ -234,7 +234,7 @@ export const usePixiStore = defineStore("pixi", () => {
 		shadowIslesIcon.height = 70
 		shadowIslesIcon.width = 70
 		shadowIslesIcon.roundPixels = true
-		shadowIslesIcon.label = "shadow-isles"
+		shadowIslesIcon.label = "shadow_isles"
 
 		// Shadow Isles Text
 		const shadowIslesText = new Text({
@@ -272,7 +272,7 @@ export const usePixiStore = defineStore("pixi", () => {
 		piltoverZaunIcon.height = 140
 		piltoverZaunIcon.width = 70
 		piltoverZaunIcon.roundPixels = true
-		piltoverZaunIcon.label = "piltover-zaun"
+		piltoverZaunIcon.label = "piltover_zaun"
 
 		// Piltover & Zaun Text
 		const piltoverZaunText = new Text({
@@ -453,7 +453,7 @@ export const usePixiStore = defineStore("pixi", () => {
 			const worldPoint = vp.toWorld(screen.x, screen.y)
 			const hoveredChildren = vp.children.find((child) => {
 				return (
-					["freljord", "noxus", "ionia", "bilgewater", "shadow-isles", "piltover-zaun", "ixtal", "shurima", "targon", "demacia"].includes(
+					["freljord", "noxus", "ionia", "bilgewater", "shadow_isles", "piltover_zaun", "ixtal", "shurima", "targon", "demacia"].includes(
 						child.label
 					) &&
 					child.x <= worldPoint.x &&
@@ -480,11 +480,11 @@ export const usePixiStore = defineStore("pixi", () => {
 						bilgewaterIcon.texture = bilgewaterHoverTexture
 						bilgewaterRegion.visible = true
 						break
-					case "shadow-isles":
+					case "shadow_isles":
 						shadowIslesIcon.texture = shadowIslesHoverTexture
 						shadowIslesRegion.visible = true
 						break
-					case "piltover-zaun":
+					case "piltover_zaun":
 						piltoverZaunIcon.texture = piltoverZaunHoverTexture
 						break
 					case "ixtal":
@@ -533,7 +533,7 @@ export const usePixiStore = defineStore("pixi", () => {
 			const worldPoint = vp.toWorld(screen.x, screen.y)
 			const clickedChildren = vp.children.find((child) => {
 				return (
-					["freljord", "noxus", "ionia", "bilgewater", "shadow-isles", "piltover-zaun", "ixtal", "shurima", "targon", "demacia"].includes(
+					["freljord", "noxus", "ionia", "bilgewater", "shadow_isles", "piltover_zaun", "ixtal", "shurima", "targon", "demacia"].includes(
 						child.label
 					) &&
 					child.x <= worldPoint.x &&
@@ -559,10 +559,10 @@ export const usePixiStore = defineStore("pixi", () => {
 					case "bilgewater":
 						changeModalEmit("change_modal", "BILGEWATER")
 						break
-					case "shadow-isles":
+					case "shadow_isles":
 						changeModalEmit("change_modal", "SHADOW_ISLES")
 						break
-					case "piltover-zaun":
+					case "piltover_zaun":
 						changeModalEmit("change_modal", "PILTOVER_ZAUN")
 						break
 					case "ixtal":

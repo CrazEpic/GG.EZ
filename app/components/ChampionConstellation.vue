@@ -23,6 +23,16 @@ const viewport = ref<Viewport | null>(null)
 const worldWidth = 1215
 const worldHeight = 717
 
+const resetCamera = async () => {
+	if (!viewport.value) return
+	viewport.value.animate({
+		time: 800,
+		position: { x: worldWidth / 2, y: worldHeight / 2 },
+		scale: 1,
+		ease: "easeOutSine",
+	})
+}
+
 const initPixi = async (container: HTMLElement) => {
 	if (app.value) return // prevent re-init
 
@@ -108,58 +118,30 @@ const initPixi = async (container: HTMLElement) => {
 		const hoveredChildren = vp.children.find((child) => {
 			return (
 				Object.keys(starCoordinates).includes(child.label) &&
-				child.x - child.width/2 <= worldPoint.x &&
-				worldPoint.x <= child.x + child.width/2 &&
-				child.y - child.height/2 <= worldPoint.y &&
-				worldPoint.y <= child.y + child.height/2
+				child.x - child.width / 2 <= worldPoint.x &&
+				worldPoint.x <= child.x + child.width / 2 &&
+				child.y - child.height / 2 <= worldPoint.y &&
+				worldPoint.y <= child.y + child.height / 2
 			)
 		})
 		if (hoveredChildren) {
-			switch (hoveredChildren.label){
-				case '1':
-					hoveredChildren.width = 30
-					hoveredChildren.height = 30
-					break
-				case '2':
-					hoveredChildren.width = 30
-					hoveredChildren.height = 30
-					break
-				case '3':
-					hoveredChildren.width = 30
-					hoveredChildren.height = 30
-					break
-				case '4':
-					hoveredChildren.width = 30
-					hoveredChildren.height = 30
-					break
-				case '5':
-					hoveredChildren.width = 30
-					hoveredChildren.height = 30
-					break
-				case '6':
-					hoveredChildren.width = 30
-					hoveredChildren.height = 30
-					break
-				case '7':
-					hoveredChildren.width = 30
-					hoveredChildren.height = 30
-					break
-			}
-		}else{
-			stars['1'].width = 20
-			stars['1'].height = 20
-			stars['2'].width = 20
-			stars['2'].height = 20
-			stars['3'].width = 20
-			stars['3'].height = 20
-			stars['4'].width = 20
-			stars['4'].height = 20
-			stars['5'].width = 20
-			stars['5'].height = 20
-			stars['6'].width = 20
-			stars['6'].height = 20
-			stars['7'].width = 20
-			stars['7'].height = 20
+			hoveredChildren.width = 30
+			hoveredChildren.height = 30
+		} else {
+			stars["1"].width = 20
+			stars["1"].height = 20
+			stars["2"].width = 20
+			stars["2"].height = 20
+			stars["3"].width = 20
+			stars["3"].height = 20
+			stars["4"].width = 20
+			stars["4"].height = 20
+			stars["5"].width = 20
+			stars["5"].height = 20
+			stars["6"].width = 20
+			stars["6"].height = 20
+			stars["7"].width = 20
+			stars["7"].height = 20
 		}
 	})
 
@@ -169,47 +151,37 @@ const initPixi = async (container: HTMLElement) => {
 		const clickedChildren = vp.children.find((child) => {
 			return (
 				Object.keys(starCoordinates).includes(child.label) &&
-				child.x - child.width/2 <= worldPoint.x &&
-				worldPoint.x <= child.x + child.width/2 &&
-				child.y - child.height/2 <= worldPoint.y &&
-				worldPoint.y <= child.y + child.height/2
+				child.x - child.width / 2 <= worldPoint.x &&
+				worldPoint.x <= child.x + child.width / 2 &&
+				child.y - child.height / 2 <= worldPoint.y &&
+				worldPoint.y <= child.y + child.height / 2
 			)
 		})
 		if (clickedChildren) {
-			switch(clickedChildren.label) {
-				case '1':
-				emit("change_drawer", "ABILITY")
-				break
-				case '2':
-				emit("change_drawer", "PLAYTIME")
-				break
-				case '3':
-				emit("change_drawer", "BUILD")
-				break
-				case '4':
-				emit("change_drawer", "GOLDGENERATING")
-				break
-				case '5':
-				emit("change_drawer", "KDADRAWER")
-				break
-				case '6':
-				emit("change_drawer", "MULTIKILLS")
-				break
-				case '7':
-				emit("change_drawer", "SUPERLATIVES")
-				break
+			switch (clickedChildren.label) {
+				case "1":
+					emit("change_drawer", "ABILITY", resetCamera, focusOn, clickedChildren.x, clickedChildren.y)
+					break
+				case "2":
+					emit("change_drawer", "PLAYTIME", resetCamera, focusOn, clickedChildren.x, clickedChildren.y)
+					break
+				case "3":
+					emit("change_drawer", "BUILD", resetCamera, focusOn, clickedChildren.x, clickedChildren.y)
+					break
+				case "4":
+					emit("change_drawer", "GOLDGENERATING", resetCamera, focusOn, clickedChildren.x, clickedChildren.y)
+					break
+				case "5":
+					emit("change_drawer", "KDADRAWER", resetCamera, focusOn, clickedChildren.x, clickedChildren.y)
+					break
+				case "6":
+					emit("change_drawer", "MULTIKILLS", resetCamera, focusOn, clickedChildren.x, clickedChildren.y)
+					break
+				case "7":
+					emit("change_drawer", "SUPERLATIVES", resetCamera, focusOn, clickedChildren.x, clickedChildren.y)
+					break
 			}
 		}
-	})
-}
-
-const resetCamera = async () => {
-	if (!viewport.value) return
-	viewport.value.animate({
-		time: 800,
-		position: { x: worldWidth / 2, y: worldHeight / 2 },
-		scale: 1,
-		ease: "easeOutSine",
 	})
 }
 
@@ -234,17 +206,17 @@ onBeforeUnmount(() => {
 	window.removeEventListener("touchmove", handleTouchMove)
 })
 
-	const focusOn = (x: number, y: number, modalCallback?: () => void) => {
-		if (!viewport.value) return
-		const screenW = viewport.value.screenWidth ?? app.value?.screen.width
-		const maxScale = screenW! / (worldWidth / 5)
+const focusOn = (x: number, y: number, modalCallback?: () => void) => {
+	if (!viewport.value) return
+	const screenW = viewport.value.screenWidth ?? app.value?.screen.width
+	const maxScale = screenW! / (worldWidth / 5)
 
-		viewport.value.animate({
-			time: 1000,
-			position: { x, y },
-			scale: maxScale,
-			ease: "easeInOutSine",
-			callbackOnComplete: modalCallback,
-		})
-	}
+	viewport.value.animate({
+		time: 1000,
+		position: { x, y },
+		scale: maxScale,
+		ease: "easeInOutSine",
+		callbackOnComplete: modalCallback,
+	})
+}
 </script>

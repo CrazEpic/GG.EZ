@@ -5,12 +5,14 @@
 			champion="Aatrox"
 			class="grow"
 			@change_drawer="
-				(drawer) => {
+				async (drawer, resetCameraCallback, focusOnCallback, x, y) => {
 					if(drawerType == drawer){
 						drawerType = 'None'
+						await resetCameraCallback()
 					}
 					else{
 						drawerType = drawer
+						await focusOnCallback(x, y)
 					}
 				}
 			"

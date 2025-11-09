@@ -1,9 +1,11 @@
 <template>
 	<div class="w-full h-full bg-freljord-secondary font-cinzel text-center">
 		<SmallerRegionSharedRegionOverlayTitle v-bind="freljordData" />
-		<SmallerRegionSharedCardCollector v-bind="freljordStats" />
-		<SmallerRegionSharedAchievements v-bind="freljordAchievements" />
-		<SmallerRegionSharedContinue v-bind="freljordContinue" @close_modal="$emit('close_modal')" />
+		<div class="px-4 sm:px-16">
+			<SmallerRegionSharedCardCollector v-bind="freljordStats" />
+			<SmallerRegionSharedAchievements v-bind="freljordAchievements" />
+			<SmallerRegionSharedContinue v-bind="freljordContinue" @close_modal="$emit('close_modal')" />
+		</div>
 	</div>
 </template>
 
@@ -29,10 +31,10 @@ const totalSnowballThrows = playerDataStore.playerData?.aram.freljord_info.total
 const freljordStats = {
 	borderColor: "border-freljord-primary",
 	stats: [
-		{ 
-		title: "Damage Taken", 
-		values: { physical: totalPhysicalTaken, magic: totalMagicTaken, true: totalTrueTaken },
-		showGraph: true
+		{
+			title: "Damage Taken",
+			values: { physical: totalPhysicalTaken, magic: totalMagicTaken, true: totalTrueTaken },
+			showGraph: true,
 		},
 		{ title: "damageSelfMitigated", values: damageSelfMitigated },
 		{ title: "totalHeal", values: { "total healing": totalHeal, "heals on teammates": totalHealsOnTeammates } },
