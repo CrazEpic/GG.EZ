@@ -26,6 +26,12 @@ logs
 __pycache__
 *.ipynb
 
-development
+development/*
+!development/
+!development/dev.ipynb
+!development/output.png
+!development/output2.png
+!development/output3.png
+!development/k_means_archetypes_sr.json
 data_dragon
 public
