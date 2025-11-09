@@ -1,0 +1,42 @@
+[
+    {
+        "archetype": 0,
+        "combat_effectiveness": 0.5239931174620329,
+        "team_contribution": 0.5780096332198227,
+        "resource_efficiency": 0.30694336762159846,
+        "vision_awareness": 0.774767163064712,
+        "consistency": 0.6516261089220058
+    },
+    {
+        "archetype": 1,
+        "combat_effectiveness": 0.6933594668287115,
+        "team_contribution": 0.5392140473188785,
+        "resource_efficiency": 0.8016641514008339,
+        "vision_awareness": 0.5038720136384401,
+        "consistency": 0.9014789823333402
+    },
+    {
+        "archetype": 2,
+        "combat_effectiveness": 0.38263965764800645,
+        "team_contribution": 0.3418902972482486,
+        "resource_efficiency": 0.34210270899667966,
+        "vision_awareness": 0.35959583574442683,
+        "consistency": 0.3369011057452526
+    },
+    {
+        "archetype": 3,
+        "combat_effectiveness": 0.5696781252482486,
+        "team_contribution": 0.43406597785233386,
+        "resource_efficiency": 0.7303831094507716,
+        "vision_awareness": 0.4341589641763218,
+        "consistency": 0.734013357445227
+    },
+    {
+        "archetype": 4,
+        "combat_effectiveness": 0.5017346754630886,
+        "team_contribution": 0.41000935077012235,
+        "resource_efficiency": 0.572489480057141,
+        "vision_awareness": 0.4242749648593833,
+        "consistency": 0.5067579073677854
+    }
+]
