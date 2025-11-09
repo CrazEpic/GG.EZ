@@ -5,8 +5,17 @@
 			GG.EZ was created under Riot Games' "Legal Jibber Jabber" policy using assets owned by Riot Games. Riot Games does not endorse or sponsor this
 			project.
 		</p>
-		<button class="text-white cursor-pointer" @click="$emit('close_modal')">Get started</button>
+		<button class="text-white cursor-pointer" @click="enterRegions">Get started</button>
 	</div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const playerDataStore = usePlayerDataStore()
+
+const emit = defineEmits(["close_modal"])
+const enterRegions = async () => {
+	const response = await $fetch("/api/player")
+	playerDataStore.playerData = response
+	emit("close_modal")
+}
+</script>

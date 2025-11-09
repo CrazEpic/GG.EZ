@@ -8,7 +8,6 @@
 </template>
 
 <script setup lang="ts">
-
 const freljordData = {
 	backdropImage: "/region-backdrop/freljordbackdrop.png",
 	title: "The Freljord",
@@ -17,30 +16,33 @@ const freljordData = {
 	borderColor: "border-freljord-primary",
 }
 
+const playerDataStore = usePlayerDataStore()
+const totalSnowballThrows = playerDataStore.playerData?.aram.freljord_info.total_snowball_throws
 const freljordStats = {
-	borderColor: 'border-freljord-primary',
-    stats: [
-		{title: 'Damage Taken', value: 'Total (physical, magic, true)'},
-		{title: '% of Team Damage Soaked', value: 'Average'},
-		{title: 'damageSelfMitigated', value: 'total'},
-		{title: 'totalHeal', value: 'Total, totalHealsOnTeammates → Total'},
-		{title: 'avg survivalRatio', value: '1:2'},
-		{title: 'max timePlayed', value: '100 mins'},
-	]
+	borderColor: "border-freljord-primary",
+	stats: [
+		{ title: "Damage Taken", value: "Total (physical, magic, true)" },
+		{ title: "% of Team Damage Soaked", value: "Average" },
+		{ title: "damageSelfMitigated", value: "total" },
+		{ title: "totalHeal", value: "Total, totalHealsOnTeammates → Total" },
+		{ title: "avg survivalRatio", value: "1:2" },
+		{ title: "max timePlayed", value: "100 mins" },
+		{ title: "total snowball throws", value: totalSnowballThrows ?? 0 },
+	],
 }
 
 const freljordAchievements = {
-	bgColor: 'bg-freljord-secondary',
-    borderColor : 'border-freljord-primary',
-    sectionText : 'YOUR ACHIEVEMENTS',
-    achievementText: 'Your longest game was on 11/2/2025, lasting 100 minutes. And yada YADA YADA',
+	bgColor: "bg-freljord-secondary",
+	borderColor: "border-freljord-primary",
+	sectionText: "YOUR ACHIEVEMENTS",
+	achievementText: "Your longest game was on 11/2/2025, lasting 100 minutes. And yada YADA YADA",
 }
 
 const freljordContinue = {
-	bgColor: 'bg-freljord-secondary',
-    borderColor : 'border-freljord-primary',
-    continueText: 'YOU ENDURED THE FROST',
-    buttonText: 'Continue Your Journey',
+	bgColor: "bg-freljord-secondary",
+	borderColor: "border-freljord-primary",
+	continueText: "YOU ENDURED THE FROST",
+	buttonText: "Continue Your Journey",
 }
 // network fetching
 </script>
