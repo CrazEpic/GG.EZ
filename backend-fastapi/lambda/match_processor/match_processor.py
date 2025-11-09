@@ -5,7 +5,9 @@ from asyncio import Semaphore
 #load_dotenv()
 S3_BUCKET = os.getenv("S3_BUCKET")
 RIOT_API_KEY = os.getenv("RIOT_API_KEY")
+PROGRESS_TABLE = os.getenv("PROGRESS_TABLE")
 S3 = boto3.client("s3")
+DDB = boto3.resource("dynamodb")
 CONCURRENCY = 1 # i think its a 1:1.2 ratio here with request delay idk
 REQUEST_DELAY = 1.2 # 100 requests per 2 minutes in the long run
 
@@ -65,6 +67,24 @@ async def fetch_match(session, routing, matchId, gameName, tagLine, semaphore):
                 Key=f"{gameName}#{tagLine}/data/raw/timeline_data/{matchId}.json",
                 Body=json.dumps(timeline_data)
             )
+
+            table = DDB.Table(PROGRESS_TABLE)
+            resp = table.update_item(
+                Key={"user": f"{gameName}#{tagLine}"},
+                UpdateExpression="SET processed_matches = processed_matches + :inc",
+                ExpressionAttributeValues={":inc": 1},
+                ReturnValues="ALL_NEW"
+            )
+
+            updated = resp["Attributes"]
+            if updated["processed_matches"] >= updated["total_matches"]:
+                print(f"All matches for {gameName}#{tagLine} finished")
+                table.update_item(
+                    Key={"user": f"{gameName}#{tagLine}"},
+                    UpdateExpression="SET done_processing = :true",
+                    ExpressionAttributeValues={":true": True}
+                )
+
             print(f"Processed {matchId}")
     except Exception as e:
         print(f"Failed on {matchId}: {e}")

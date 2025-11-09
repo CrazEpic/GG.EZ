@@ -5,7 +5,9 @@ from datetime import datetime, timezone
 #load_dotenv()
 RIOT_API_KEY = os.getenv("RIOT_API_KEY")
 MATCH_QUEUE_URL = os.getenv("MATCH_QUEUE_URL")
+PROGRESS_TABLE = os.getenv("PROGRESS_TABLE")
 SQS = boto3.client("sqs")
+DDB = boto3.resource("dynamodb")
 JAN_5_2025 = int(datetime(2025, 1, 5, tzinfo=timezone.utc).timestamp())
 NOV_1_2025 = int(datetime(2025, 11, 1, tzinfo=timezone.utc).timestamp())
 BATCH_SIZE = 50
@@ -32,6 +34,24 @@ def lambda_handler(event, context):
             print(f"No games found for {gameName}#{tagLine}")
             continue
         print(f"Got {len(matchIds)} for {gameName}#{tagLine}")
+
+        # add player to table
+        try:
+            table = DDB.Table(PROGRESS_TABLE)
+            user = f"{gameName}#{tagLine}"
+            table.put_item(
+                Item={
+                    "user": user,
+                    "total_matches": len(matchIds),
+                    "processed_matches": 0,
+                    "done_processing": False
+                },
+                ConditionExpression="attribute_not_exists(#u)",
+                ExpressionAttributeNames={"#u": "user"}
+            )
+        except Exception as e:
+            print(f"Matches already being processed for {user}")
+            return {"status": 200, "message": f"User already enqueued"}
 
         # batch ids, send to match processing queue
         # batches processed in fifo order, but the individual matches should be done concurrently
