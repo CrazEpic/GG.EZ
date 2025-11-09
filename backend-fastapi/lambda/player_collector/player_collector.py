@@ -72,7 +72,7 @@ def get_all_match_ids(routing, puuid):
     header = {"X-Riot-Token": RIOT_API_KEY}
     endpoint = f"https://{routing}.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids"
     all_match_ids = []
-    for queue in [400, 420, 430, 440, 490]:
+    for queue in [400, 420, 430, 440, 450, 490]:
         start = 0
         params = {
             "startTime": JAN_5_2025,
