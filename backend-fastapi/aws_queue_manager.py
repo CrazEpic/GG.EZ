@@ -84,14 +84,3 @@ class AWSQueueManager:
         )
 
         return {"status": 200, "message": "Player enqueued"}
-    
-if __name__ == "__main__":
-    print("starting")
-    test = AWSQueueManager()
-    input = {
-        "region": "na1",
-        "gameName": "j99",
-        "tagLine": "asuka"
-    }
-    print(test.enqueue(input))
-    print("done")
