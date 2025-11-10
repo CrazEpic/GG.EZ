@@ -61,7 +61,7 @@
 				</div>
 
 				<button
-					@click="enterRegions"
+					@click="playIntro(); enterRegions()"
 					class="p-2 text-white rounded-lg hover:brightness-200 cursor-pointer bg-default-secondary border-default-primary border-2"
 				>
 					GO
@@ -115,4 +115,15 @@ const enterRegions = async () => {
 		return
 	}
 }
+
+let introAudio: HTMLAudioElement | null = null
+
+const playIntro = () => {
+  if (!introAudio) {
+    introAudio = new Audio('soundfiles/sfx/windintro.mp3')
+  }
+  introAudio.currentTime = 0
+  introAudio.play()
+}
+
 </script>
