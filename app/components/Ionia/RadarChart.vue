@@ -1,5 +1,9 @@
 <template>
-	<div style="width: 400px"><canvas ref="radarContainer" class="border-ionia-primary border-2 bg-ionia-secondary"></canvas></div>
+	<div>
+		<p class="p-10 text-white text-3xl text-cinzel">BALANCE OF STRENGTHS</p>
+	</div>
+	<div class="mx-auto" style="width: 400px">
+		<canvas ref="radarContainer" class="border-ionia-primary border-2 bg-ionia-secondary"></canvas></div>
 </template>
 
 <script setup lang="ts">
@@ -32,6 +36,7 @@ const props = defineProps({
 		required: false,
 		default: 0,
 	},
+
 })
 
 onMounted(() => {

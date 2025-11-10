@@ -8,7 +8,7 @@
 				</div>
 				<!-- real card -->
 				<div v-else :class="`grow basis-${minCardWidth}px w-full`">
-					<div class="bg-black text-center border h-90 w-min mx-auto">
+					<div class="bg-black text-center border h-110 w-min mx-auto">
 						<component :is="card" />
 					</div>
 				</div>

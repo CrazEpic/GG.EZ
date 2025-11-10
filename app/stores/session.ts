@@ -1,11 +1,13 @@
 export const useSessionStore = defineStore("session", () => {
+	const displaySR = ref(true)
+
 	const freljordCardSR = ref<string | null>(null)
 	const noxusCardSR = ref<string | null>(null)
 	const shadowIslesCardSR = ref<string | null>(null)
 	const bilgewaterCardSR = ref<string | null>(null)
 	const ixtalCardSR = ref<string | null>(null)
 	const shurimaCardSR = ref<string | null>(null)
-
+	
 	const freljordCardAram = ref<string | null>(null)
 	const noxusCardAram = ref<string | null>(null)
 	const shadowIslesCardAram = ref<string | null>(null)
@@ -27,6 +29,7 @@ export const useSessionStore = defineStore("session", () => {
 	})
 
 	return {
+		displaySR,
 		freljordCardSR,
 		noxusCardSR,
 		shadowIslesCardSR,
