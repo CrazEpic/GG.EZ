@@ -1,7 +1,46 @@
 export interface Root {
 	sr: Sr
 	aram: Aram
-	puuid : String
+	overview: Overview
+	llm_responses: LlmStats
+	puuid: string
+	gameName: string
+	tagLine: string
+}
+
+export interface LlmStats {
+  sr: SrLLM
+  aram: AramLLM
+}
+
+export interface SrLLM {
+	"ionia_response": Array<string>
+	"piltover_response": Array<string>
+	"zaun_response": Array<string>
+	"bilgewater_response": string
+	"shadow_isles_response": string
+	"shurima_response": string
+	"ixtal_response": string
+	"noxus_response": string
+	"freljord_response": string
+}
+
+export interface AramLLM {
+	"piltover_response": Array<string>
+	"zaun_response": Array<string>
+	"bilgewater_response": string
+	"shadow_isles_response": string
+	"noxus_response": string
+	"freljord_response": string
+}
+
+export interface Overview {
+	matches_counted_sr: number
+	matches_counted_aram: number
+	play_time_sr: number
+	play_time_aram: number
+	wins_sr: number
+	wins_aram: number
 }
 
 export interface Sr {
@@ -29,16 +68,16 @@ export interface Aram {
 }
 
 export interface IoniaInfo {
-  combat_effectiveness: number
-  team_contribution: number
-  resource_efficiency: number
-  vision_awareness: number
-  consistency: number
-  archetype_id: number
-  archetype_similarity: number
-  most_played_lane: "Top" | "Jungle" | "Mid" | "ADC" | "Support"
-  top_3_pros: [string, number, number][] 
-  // first string is the username + tagline 2nd is similarity score 3rd is archetype
+	combat_effectiveness: number
+	team_contribution: number
+	resource_efficiency: number
+	vision_awareness: number
+	consistency: number
+	archetype_id: number
+	archetype_similarity: number
+	most_played_lane: "Top" | "Jungle" | "Mid" | "ADC" | "Support"
+	top_3_pros: [string, number, number][]
+	// first string is the username + tagline 2nd is similarity score 3rd is archetype
 }
 export interface DemaciaInfo {
 	most_common_teammates: MostCommonTeammate[]
@@ -84,6 +123,76 @@ export interface TargonInfo {
 export interface PiltoverInfo {}
 
 export interface ZaunInfo {}
+
+export interface Season3 {
+  first_half_num_games: number
+  second_half_num_games: number
+  avg_kda_percentage_difference: number
+  avg_gold_earned_percentage_difference: number
+  avg_kill_participation_percentage_difference: number
+  avg_objective_participation_ratio_percentage_difference: number
+  avg_vision_score_percentage_difference: number
+  avg_winrate_percentage_difference: number
+  first_half_avg_kda: number
+  first_half_avg_gold_earned: number
+  first_half_avg_kill_participation: number
+  first_half_avg_objective_participation_ratio: number
+  first_half_avg_vision_score: number
+  first_half_avg_winrate: number
+  second_half_avg_kda: number
+  second_half_avg_gold_earned: number
+  second_half_avg_kill_participation: number
+  second_half_avg_objective_participation_ratio: number
+  second_half_avg_vision_score: number
+  second_half_avg_winrate: number
+}
+
+export interface ZaunInfo {
+  "season 1": SeasonZaun
+  "season 2": SeasonZaun
+  "season 3": SeasonZaun
+}
+
+export interface PiltoverInfo {
+  "season 1": SeasonPiltover
+  "season 2": SeasonPiltover
+  "season 3": SeasonPiltover
+}
+
+export interface SeasonPiltover {
+  first_half_num_games: number
+  second_half_num_games: number
+  avg_kda_percentage_difference: number
+  avg_gold_earned_percentage_difference: number
+  avg_kill_participation_percentage_difference: number
+  avg_objective_participation_ratio_percentage_difference: number
+  avg_vision_score_percentage_difference: number
+  avg_winrate_percentage_difference: number
+  first_half_avg_kda: number
+  first_half_avg_gold_earned: number
+  first_half_avg_kill_participation: number
+  first_half_avg_objective_participation_ratio: number
+  first_half_avg_vision_score: number
+  first_half_avg_winrate: number
+  second_half_avg_kda: number
+  second_half_avg_gold_earned: number
+  second_half_avg_kill_participation: number
+  second_half_avg_objective_participation_ratio: number
+  second_half_avg_vision_score: number
+  second_half_avg_winrate: number
+}
+
+export interface SeasonZaun {
+  games_played: number
+  max_pentakills: number
+  max_gold_deficit_comeback: number
+  max_kills: number
+  max_deaths: number
+  max_damage_dealt: number
+  max_damage_taken: number
+  biggest_win_streak: number
+  biggest_loss_streak: number
+}
 
 export interface BilgewaterInfo {
 	total_gold_earned: number

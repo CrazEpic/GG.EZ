@@ -13,10 +13,10 @@
 					style="position: relative; display: flex; flex-direction: column; gap: 2px; color: white; height: 100%; justify-content: end; padding: 16px"
 				>
 					<div class="flex flex-row gap-2 items-end">
-						<img src="/dan_the_penguin.png" class="w-16 h-16 rounded-full border-2 border-[#FFFFFF]" />
+						<img src="" class="w-16 h-16 rounded-full border-2 border-[#FFFFFF]" />
 						<div class="flex flex-col justify-end">
 							<p class="text-left">2025 GG.EZ</p>
-							<p class="whitespace-nowrap">Dan the Penguin</p>
+							<p class="whitespace-nowrap">{{ 11 }}</p>
 							<p class="whitespace-nowrap">#NA1</p>
 						</div>
 					</div>
@@ -56,6 +56,8 @@
 <script setup>
 import html2canvas from "html2canvas"
 const postcardRef = useTemplateRef("postcardRef")
+
+const playerDataStore = usePlayerDataStore()
 
 const tiles = ref([
 	{ id: 1, type: "text", text: "Hello World", colSpan: 2, rowSpan: 1, gridColumnStart: 1, gridRowStart: 1 },
