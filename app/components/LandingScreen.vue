@@ -1,6 +1,5 @@
 <template>
 	<div style="background-color: rgba(0, 0, 0, 0.85)">
-		<Header class="sticky top-0"></Header>
 		<div class="px-4 py-16 sm:px-16 flex flex-col gap-y-4 items-center justify-center">
 			<div class="p-8 border-2 border-default-primary bg-default-secondary text-center w-full">
 				<h1 class="text-4xl text-white mb-4">Welcome to GG.EZ</h1>

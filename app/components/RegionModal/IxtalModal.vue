@@ -1,13 +1,27 @@
 <template>
 	<div class="w-full h-full bg-ixtal-secondary font-cinzel text-center">
 		<SmallerRegionSharedRegionOverlayTitle v-bind="ixtalData" />
-		<SmallerRegionSharedCardCollector v-bind="ixtalStats" />
-		<SmallerRegionSharedAchievements v-bind="ixtalAchievements" />
-		<SmallerRegionSharedContinue v-bind="ixtalContinue" @close_modal="$emit('close_modal')" />
+		<div class="px-4 sm:px-16">
+			<SmallerRegionSharedCardCollector v-bind="ixtalStats" />
+			<SmallerRegionSharedAchievements v-bind="ixtalAchievements" />
+			<SmallerRegionSharedContinue v-bind="ixtalContinue" @close_modal="$emit('close_modal')" />
+		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
+const playerDataStore = usePlayerDataStore()
+const ixtalInfo = playerDataStore.playerData?.sr.ixtal_info
+const avgVisionScorePerMin = Number(playerDataStore.playerData?.sr.ixtal_info.avg_vision_score_per_min.toFixed(2))
+const totalPings = ixtalInfo
+	? Object.entries(ixtalInfo)
+			.filter(([key, value]) => key.endsWith("Pings"))
+			.reduce((sum, [key, value]) => sum + value, 0)
+	: 0
+const totalObjStolen = playerDataStore.playerData?.sr.ixtal_info.total_objectives_stolen
+const avgJungleShare = Number(playerDataStore.playerData?.sr.ixtal_info.avg_jungle_share_when_jungle.toFixed(2))
+const wardsKilled = playerDataStore.playerData?.sr.ixtal_info.total_total_wards_killed
+const wardsPlaced = playerDataStore.playerData?.sr.ixtal_info.total_total_wards_placed
 
 const ixtalData = {
 	backdropImage: "/region-backdrop/ixtalbackdrop.png",
@@ -18,29 +32,29 @@ const ixtalData = {
 }
 
 const ixtalStats = {
-	borderColor: 'border-ixtal-primary',
-    stats: [
-		{title: 'avg visionScorePerMinute', values: 'average'},
-		{title: 'total pings', values: 'number'},
-		{title: 'total objectivesStolen', values: 'total'},
-		{title: 'avg JungleShare (as jungler)', values: 'avg'},
-		{title: 'total wards killed', values: 'number'},
-		{title: 'total wards placed', values: 'number'},
-	]
+	borderColor: "border-ixtal-primary",
+	stats: [
+		{ title: "Average Vision Score per Minute", value: avgVisionScorePerMin },
+		{ title: "Total Pings", value: totalPings },
+		{ title: "Total Objectives Stolen", value: totalObjStolen },
+		{ title: "Average Jungle Share", value: avgJungleShare },
+		{ title: "Total Wards Killed", value: wardsKilled },
+		{ title: "Total Wards Placed", value: wardsPlaced },
+	],
 }
 
 const ixtalAchievements = {
-	bgColor: 'bg-ixtal-secondary',
-    borderColor : 'border-ixtal-primary',
-    sectionText : 'YOUR ACHIEVEMENTS',
-    achievementText: 'Your longest game was on 11/2/2025, lasting 100 minutes. And yada YADA YADA',
+	bgColor: "bg-ixtal-secondary",
+	borderColor: "border-ixtal-primary",
+	sectionText: "YOUR ACHIEVEMENTS",
+	achievementText: "Your longest game was on 11/2/2025, lasting 100 minutes. And yada YADA YADA",
 }
 
 const ixtalContinue = {
-	bgColor: 'bg-ixtal-secondary',
-    borderColor : 'border-ixtal-primary',
-    continueText: "YOU'VE MASTERED THE WILDERNESS",
-    buttonText: 'Continue Your Journey',
+	bgColor: "bg-ixtal-secondary",
+	borderColor: "border-ixtal-primary",
+	continueText: "YOU'VE MASTERED THE WILDERNESS",
+	buttonText: "Continue Your Journey",
 }
 // network fetching
 </script>

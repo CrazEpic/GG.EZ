@@ -28,13 +28,17 @@ export interface Aram {
 }
 
 export interface IoniaInfo {
-	combat_effectiveness: number
-	team_contribution: number
-	resource_efficiency: number
-	vision_awareness: number
-	consistency: number
+  combat_effectiveness: number
+  team_contribution: number
+  resource_efficiency: number
+  vision_awareness: number
+  consistency: number
+  archetype_id: number
+  archetype_similarity: number
+  most_played_lane: "Top" | "Jungle" | "Mid" | "ADC" | "Support"
+  top_3_pros: [string, number, number][] 
+  // first string is the username + tagline 2nd is similarity score 3rd is archetype
 }
-
 export interface DemaciaInfo {
 	most_common_teammates: MostCommonTeammate[]
 }

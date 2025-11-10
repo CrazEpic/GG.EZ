@@ -109,7 +109,7 @@ const initPixi = async (container: HTMLElement) => {
 		const starB = stars[b]
 		edgeGraphics.moveTo(starA.x, starA.y)
 		edgeGraphics.lineTo(starB.x, starB.y)
-		edgeGraphics.stroke({ width: 1, color: 0xffffff }) // Finalize the line drawing
+		edgeGraphics.stroke({ width: 1, color: 0xE0E1E4 }) // Finalize the line drawing
 	})
 
 	vp.on("pointermove", (event) => {
