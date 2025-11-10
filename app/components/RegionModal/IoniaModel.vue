@@ -7,6 +7,7 @@
 		<div class="px-4 sm:px-16">
 			<div class="flex flex-wrap justify-evenly">
 				<div class="w-fit">
+					<p class="text-white text-2xl">{{ archetype.name }}</p>
 					<IoniaRadarChart
 						ref="playerRadarChart"
 						:combat="playerDataStore.playerData?.sr.ionia_info.combat_effectiveness ?? 0"
@@ -15,9 +16,10 @@
 						:resourceEfficiency="playerDataStore.playerData?.sr.ionia_info.resource_efficiency ?? 0"
 						:consistency="playerDataStore.playerData?.sr.ionia_info.consistency ?? 0"
 					/>
-					<p class="text-white">Craz</p>
+					<p class="text-white">{{summonerName}}</p>
 				</div>
 				<div v-if="selectedPro != ''" class="w-fit">
+					<p class="text-white text-2xl">{{ proPlayersArchetype.name }}</p>
 					<IoniaRadarChart :combat="0.5" :team-contribution="0.6" :visionAndAwareness="0.75" :resourceEfficiency="0.9" :consistency="0.7" />
 					<p class="text-white">{{ selectedPro }}</p>
 				</div>
@@ -45,6 +47,7 @@
 <script setup lang="ts">
 const playerRadarChart = useTemplateRef("playerRadarChart")
 const playerDataStore = usePlayerDataStore()
+const summonerName = playerDataStore.playerData?.sr.ionia_info.summonerName
 const mostPlayedLane = playerDataStore.playerData?.sr.ionia_info.most_played_lane
 const archetypeId = playerDataStore.playerData?.sr.ionia_info.archetype_id
 const topThreePros = playerDataStore.playerData?.sr.ionia_info.top_3_pros ?? []
@@ -82,18 +85,15 @@ const archetypes = {
 	},
 }
 const archetype = archetypes[archetypeId]
-
-const pros = [
-	{ name: "Dan", img: "dan_the_penguin.png" },
-	{ name: "James", img: "dan_the_penguin.png" },
-	{ name: "Lucy", img: "dan_the_penguin.png" },
-]
+const proPlayersArchetype = archetypes[archetypeId]
 
 const selectedPro = ref("")
 
 const proPlayers = topThreePros?.map((p) => ({
 	name: p[0],
-	img: `/player-icons/${p[0]}.png`
+	stats: p[1],
+	img: `/player-icons/${p[0]}.png`,
+	archetype: p[2]
 }))
 
 const ioniaData = {
@@ -134,4 +134,19 @@ const scrollPlayerRadarToTop = () => {
 		radarElement.scrollIntoView({ behavior: "smooth", block: "start" })
 	}
 }
+const audio = ref()
+
+onMounted(() => {
+    audio.value = new Audio("soundfiles/region_music/ionia.mp3")
+    audio.value.loop = true
+    audio.value.volume = 0.5
+    audio.value.play()
+})
+
+onBeforeUnmount(() => {
+    if (audio.value) {
+        audio.value.pause()
+        audio.value.currentTime = 0
+    }
+})
 </script>

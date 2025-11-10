@@ -1,6 +1,7 @@
 export interface Root {
 	sr: Sr
 	aram: Aram
+	puuid : String
 }
 
 export interface Sr {

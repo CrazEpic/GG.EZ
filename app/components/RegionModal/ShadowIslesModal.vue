@@ -58,4 +58,19 @@ const shadowIslesContinue = {
 	buttonText: "Continue Your Journey",
 }
 // network fetching
+const audio = ref()
+
+onMounted(() => {
+    audio.value = new Audio("soundfiles/region_music/shadowIsles.mp3")
+    audio.value.loop = true
+    audio.value.volume = 0.5
+    audio.value.play()
+})
+
+onBeforeUnmount(() => {
+    if (audio.value) {
+        audio.value.pause()
+        audio.value.currentTime = 0
+    }
+})
 </script>

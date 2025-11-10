@@ -22,7 +22,7 @@
 
 		<!-- Items Card -->
 		<div v-else>
-			<div class="flex-col text-2xl py-20">
+			<div class="flex-col text-lg py-20">
 				<div class="py-5" v-for="(val, key) in typeof value === 'object' && value !== null ? value : {}">{{ key }}: {{ val }}</div>
 			</div>
 

@@ -87,15 +87,15 @@ export const usePixiStore = defineStore("pixi", () => {
 				fontFamily: "Cinzel",
 				fontSize: 26,
 				fill: "#FFFFDE",
-				stroke: { 
-					color: '#000000', // Black outline
+				stroke: {
+					color: "#000000", // Black outline
 					width: 2.5,
 				},
-				align: 'center'
+				align: "center",
 			},
-		});
-		freljordText.x = 620;
-		freljordText.y = 270;
+		})
+		freljordText.x = 620
+		freljordText.y = 270
 		vp.addChild(freljordText)
 
 		// Freljord Terrain
@@ -106,7 +106,7 @@ export const usePixiStore = defineStore("pixi", () => {
 		freljordRegion.width = 1348
 		freljordRegion.height = 1348
 		freljordRegion.visible = false
-		
+
 		// Noxus Icon
 		const noxusTexture = await Assets.load("icons/noxus.png")
 		const noxusHoverTexture = await Assets.load("hover-icons/noxus-hover.png")
@@ -126,15 +126,15 @@ export const usePixiStore = defineStore("pixi", () => {
 				fontFamily: "Cinzel",
 				fontSize: 26,
 				fill: "#FFFFDE",
-				stroke: { 
-					color: '#000000', // Black outline
+				stroke: {
+					color: "#000000", // Black outline
 					width: 2.5,
 				},
-				align: 'center'
+				align: "center",
 			},
-		});
-		noxusText.x = 847;
-		noxusText.y = 350;
+		})
+		noxusText.x = 847
+		noxusText.y = 350
 		vp.addChild(noxusText)
 
 		// Noxus Terrain
@@ -165,15 +165,15 @@ export const usePixiStore = defineStore("pixi", () => {
 				fontFamily: "Cinzel",
 				fontSize: 26,
 				fill: "#FFFFDE",
-				stroke: { 
-					color: '#000000', // Black outline
+				stroke: {
+					color: "#000000", // Black outline
 					width: 2.5,
 				},
-				align: 'center'
+				align: "center",
 			},
-		});
-		ioniaText.x = 1232;
-		ioniaText.y = 325;
+		})
+		ioniaText.x = 1232
+		ioniaText.y = 325
 		vp.addChild(ioniaText)
 
 		// Ionia Terrain
@@ -204,15 +204,15 @@ export const usePixiStore = defineStore("pixi", () => {
 				fontFamily: "Cinzel",
 				fontSize: 26,
 				fill: "#FFFFDE",
-				stroke: { 
-					color: '#000000', // Black outline
+				stroke: {
+					color: "#000000", // Black outline
 					width: 2.5,
 				},
-				align: 'center'
+				align: "center",
 			},
-		});
-		bilgewaterText.x = 1230;
-		bilgewaterText.y = 575;
+		})
+		bilgewaterText.x = 1230
+		bilgewaterText.y = 575
 		vp.addChild(bilgewaterText)
 
 		// Bilgewater Terrain
@@ -243,15 +243,15 @@ export const usePixiStore = defineStore("pixi", () => {
 				fontFamily: "Cinzel",
 				fontSize: 26,
 				fill: "#FFFFDE",
-				stroke: { 
-					color: '#000000', // Black outline
+				stroke: {
+					color: "#000000", // Black outline
 					width: 2.5,
 				},
-				align: 'center'
+				align: "center",
 			},
-		});
-		shadowIslesText.x = 1280;
-		shadowIslesText.y = 730;
+		})
+		shadowIslesText.x = 1280
+		shadowIslesText.y = 730
 		vp.addChild(shadowIslesText)
 
 		// Shadow Isles Terrain
@@ -281,15 +281,15 @@ export const usePixiStore = defineStore("pixi", () => {
 				fontFamily: "Cinzel",
 				fontSize: 26,
 				fill: "#FFFFDE",
-				stroke: { 
-					color: '#000000', // Black outline
+				stroke: {
+					color: "#000000", // Black outline
 					width: 2.5,
 				},
-				align: 'center'
+				align: "center",
 			},
-		});
-		piltoverZaunText.x = 830;
-		piltoverZaunText.y = 505;
+		})
+		piltoverZaunText.x = 830
+		piltoverZaunText.y = 505
 		vp.addChild(piltoverZaunText)
 
 		// Ixtal Icon
@@ -311,15 +311,15 @@ export const usePixiStore = defineStore("pixi", () => {
 				fontFamily: "Cinzel",
 				fontSize: 26,
 				fill: "#FFFFDE",
-				stroke: { 
-					color: '#000000', // Black outline
+				stroke: {
+					color: "#000000", // Black outline
 					width: 2.5,
 				},
-				align: 'center'
+				align: "center",
 			},
-		});
-		ixtalText.x = 1060;
-		ixtalText.y = 690;
+		})
+		ixtalText.x = 1060
+		ixtalText.y = 690
 		vp.addChild(ixtalText)
 
 		// Ixtal Terrain
@@ -350,15 +350,15 @@ export const usePixiStore = defineStore("pixi", () => {
 				fontFamily: "Cinzel",
 				fontSize: 26,
 				fill: "#FFFFDE",
-				stroke: { 
-					color: '#000000', // Black outline
+				stroke: {
+					color: "#000000", // Black outline
 					width: 2.5,
 				},
-				align: 'center'
+				align: "center",
 			},
-		});
-		shurimaText.x = 900;
-		shurimaText.y = 685;
+		})
+		shurimaText.x = 900
+		shurimaText.y = 685
 		vp.addChild(shurimaText)
 
 		// Shurima Terrain
@@ -381,7 +381,7 @@ export const usePixiStore = defineStore("pixi", () => {
 		targonIcon.width = 70
 		targonIcon.roundPixels = true
 		targonIcon.label = "targon"
-		
+
 		// Targon Text
 		const targonText = new Text({
 			text: "Targon",
@@ -389,15 +389,15 @@ export const usePixiStore = defineStore("pixi", () => {
 				fontFamily: "Cinzel",
 				fontSize: 26,
 				fill: "#FFFFDE",
-				stroke: { 
-					color: '#000000', // Black outline
+				stroke: {
+					color: "#000000", // Black outline
 					width: 2.5,
 				},
-				align: 'center'
+				align: "center",
 			},
-		});
-		targonText.x = 705;
-		targonText.y = 705;
+		})
+		targonText.x = 705
+		targonText.y = 705
 		vp.addChild(targonText)
 
 		// Targon Terrain
@@ -428,15 +428,15 @@ export const usePixiStore = defineStore("pixi", () => {
 				fontFamily: "Cinzel",
 				fontSize: 26,
 				fill: "#FFFFDE",
-				stroke: { 
-					color: '#000000', // Black outline
+				stroke: {
+					color: "#000000", // Black outline
 					width: 2.5,
 				},
-				align: 'center'
+				align: "center",
 			},
-		});
-		demaciaText.x = 570;
-		demaciaText.y = 430;
+		})
+		demaciaText.x = 570
+		demaciaText.y = 430
 		vp.addChild(demaciaText)
 
 		// Demacia Terrain
@@ -528,7 +528,7 @@ export const usePixiStore = defineStore("pixi", () => {
 		})
 
 		//Moves into region page when region icon pressed
-		vp.on('pointerdown', (event) => {
+		vp.on("pointerdown", (event) => {
 			const screen = event.global
 			const worldPoint = vp.toWorld(screen.x, screen.y)
 			const clickedChildren = vp.children.find((child) => {
@@ -579,8 +579,23 @@ export const usePixiStore = defineStore("pixi", () => {
 						break
 				}
 			}
-		});
+		})
 	}
+
+	const hover = ref()
+
+	onMounted(() => {
+		const hover = new Audio("soundfiles/sfx/regionhover.mp3")
+		hover.loop = true
+		hover.volume = 0.5
+	})
+
+	onBeforeUnmount(() => {
+		if (hover.value) {
+			hover.value.pause()
+			hover.value.currentTime = 0
+		}
+	})
 
 	/** Move and zoom to a specific point */
 	const focusOn = (x: number, y: number, modalCallback?: () => void) => {
