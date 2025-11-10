@@ -10,5 +10,10 @@ export default defineNuxtConfig({
 	modules: ["@pinia/nuxt"],
 	runtimeConfig: {
 		public: {},
+		RIOT_API_KEY: "",
+		AWS_REGION: "",
+		S3_SQS_ACCESS_KEY: "",
+		S3_SQS_SECRET_ACCESS_KEY: "",
+		SQS_QUEUE_URL: "",
 	},
 })

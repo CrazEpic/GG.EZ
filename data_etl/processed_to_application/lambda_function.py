@@ -81,46 +81,136 @@ def lambda_handler(event, context):
                 Bucket=S3_BUCKET,
                 Key=f"processed/{match_id}/match.json",
             )
-            match_data = MatchData.model_validate_json(match_obj["Body"].read().decode("utf-8"))
+            match_data = MatchData.model_validate_json(
+                match_obj["Body"].read().decode("utf-8")
+            )
             timeline_obj = S3.get_object(
                 Bucket=S3_BUCKET,
                 Key=f"processed/{match_id}/timeline.json",
             )
-            timeline_data = MatchTimelineData.model_validate_json(timeline_obj["Body"].read().decode("utf-8"))
+            timeline_data = MatchTimelineData.model_validate_json(
+                timeline_obj["Body"].read().decode("utf-8")
+            )
             gameMode = match_data.game.gameMode
             if gameMode == "CLASSIC" or gameMode == "SWIFTPLAY":
-                play_time_sr += match_data.players[next(i for i, p in enumerate(match_data.players) if p.identity.puuid == puuid)].combat.timePlayed / 60
-                team_id = match_data.players[next(i for i, p in enumerate(match_data.players) if p.identity.puuid == puuid)].identity.teamId
-                if match_data.game.teams[next(i for i, t in enumerate(match_data.game.teams) if t.teamId == team_id)].win:
+                play_time_sr += (
+                    match_data.players[
+                        next(
+                            i
+                            for i, p in enumerate(match_data.players)
+                            if p.identity.puuid == puuid
+                        )
+                    ].combat.timePlayed
+                    / 60
+                )
+                team_id = match_data.players[
+                    next(
+                        i
+                        for i, p in enumerate(match_data.players)
+                        if p.identity.puuid == puuid
+                    )
+                ].identity.teamId
+                if match_data.game.teams[
+                    next(
+                        i
+                        for i, t in enumerate(match_data.game.teams)
+                        if t.teamId == team_id
+                    )
+                ].win:
                     wins_sr += 1
-                raw_ionia_metrics_sr.append(get_raw_ionia_metrics_for_match(puuid, match_data, timeline_data))
-                raw_demacia_metrics_sr.append(get_raw_demacia_metrics_for_match(puuid, match_data, timeline_data))
-                raw_targon_metrics_sr.append(get_raw_targon_metrics_for_match(puuid, match_data, timeline_data))
-                raw_piltover_metrics_sr.append(get_raw_piltover_metrics_for_match(puuid, match_data, timeline_data))
-                raw_zaun_metrics_sr.append(get_raw_zaun_metrics_for_match(puuid, match_data, timeline_data))
-                raw_bilgewater_metrics_sr.append(get_raw_bilgewater_metrics_for_match(puuid, match_data, timeline_data))
-                raw_shadow_isles_metrics_sr.append(get_raw_shadow_isles_metrics_for_match(puuid, match_data, timeline_data))
-                raw_shurima_metrics_sr.append(get_raw_shurima_metrics_for_match(puuid, match_data, timeline_data))
-                raw_ixtal_metrics_sr.append(get_raw_ixtal_metrics_for_match(puuid, match_data, timeline_data))
-                raw_noxus_metrics_sr.append(get_raw_noxus_metrics_for_match(puuid, match_data, timeline_data))
-                raw_freljord_metrics_sr.append(get_raw_freljord_metrics_for_match(puuid, match_data, timeline_data))
+                raw_ionia_metrics_sr.append(
+                    get_raw_ionia_metrics_for_match(puuid, match_data, timeline_data)
+                )
+                raw_demacia_metrics_sr.append(
+                    get_raw_demacia_metrics_for_match(puuid, match_data, timeline_data)
+                )
+                raw_targon_metrics_sr.append(
+                    get_raw_targon_metrics_for_match(puuid, match_data, timeline_data)
+                )
+                raw_piltover_metrics_sr.append(
+                    get_raw_piltover_metrics_for_match(puuid, match_data, timeline_data)
+                )
+                raw_zaun_metrics_sr.append(
+                    get_raw_zaun_metrics_for_match(puuid, match_data, timeline_data)
+                )
+                raw_bilgewater_metrics_sr.append(
+                    get_raw_bilgewater_metrics_for_match(
+                        puuid, match_data, timeline_data
+                    )
+                )
+                raw_shadow_isles_metrics_sr.append(
+                    get_raw_shadow_isles_metrics_for_match(
+                        puuid, match_data, timeline_data
+                    )
+                )
+                raw_shurima_metrics_sr.append(
+                    get_raw_shurima_metrics_for_match(puuid, match_data, timeline_data)
+                )
+                raw_ixtal_metrics_sr.append(
+                    get_raw_ixtal_metrics_for_match(puuid, match_data, timeline_data)
+                )
+                raw_noxus_metrics_sr.append(
+                    get_raw_noxus_metrics_for_match(puuid, match_data, timeline_data)
+                )
+                raw_freljord_metrics_sr.append(
+                    get_raw_freljord_metrics_for_match(puuid, match_data, timeline_data)
+                )
                 matches_counted_sr += 1
             elif gameMode == "ARAM":
-                play_time_aram += match_data.players[next(i for i, p in enumerate(match_data.players) if p.identity.puuid == puuid)].combat.timePlayed / 60
-                team_id = match_data.players[next(i for i, p in enumerate(match_data.players) if p.identity.puuid == puuid)].identity.teamId
-                if match_data.game.teams[next(i for i, t in enumerate(match_data.game.teams) if t.teamId == team_id)].win:
+                play_time_aram += (
+                    match_data.players[
+                        next(
+                            i
+                            for i, p in enumerate(match_data.players)
+                            if p.identity.puuid == puuid
+                        )
+                    ].combat.timePlayed
+                    / 60
+                )
+                team_id = match_data.players[
+                    next(
+                        i
+                        for i, p in enumerate(match_data.players)
+                        if p.identity.puuid == puuid
+                    )
+                ].identity.teamId
+                if match_data.game.teams[
+                    next(
+                        i
+                        for i, t in enumerate(match_data.game.teams)
+                        if t.teamId == team_id
+                    )
+                ].win:
                     wins_aram += 1
                 # raw_ionia_metrics_aram.append(get_raw_ionia_metrics_for_match(puuid, match_data, timeline_data))
-                raw_demacia_metrics_aram.append(get_raw_demacia_metrics_for_match(puuid, match_data, timeline_data))
+                raw_demacia_metrics_aram.append(
+                    get_raw_demacia_metrics_for_match(puuid, match_data, timeline_data)
+                )
                 # raw_targon_metrics_aram.append(get_raw_targon_metrics_for_match(puuid, match_data, timeline_data))
-                raw_piltover_metrics_aram.append(get_raw_piltover_metrics_for_match(puuid, match_data, timeline_data))
-                raw_zaun_metrics_aram.append(get_raw_zaun_metrics_for_match(puuid, match_data, timeline_data))
-                raw_bilgewater_metrics_aram.append(get_raw_bilgewater_metrics_for_match(puuid, match_data, timeline_data))
-                raw_shadow_isles_metrics_aram.append(get_raw_shadow_isles_metrics_for_match(puuid, match_data, timeline_data))
+                raw_piltover_metrics_aram.append(
+                    get_raw_piltover_metrics_for_match(puuid, match_data, timeline_data)
+                )
+                raw_zaun_metrics_aram.append(
+                    get_raw_zaun_metrics_for_match(puuid, match_data, timeline_data)
+                )
+                raw_bilgewater_metrics_aram.append(
+                    get_raw_bilgewater_metrics_for_match(
+                        puuid, match_data, timeline_data
+                    )
+                )
+                raw_shadow_isles_metrics_aram.append(
+                    get_raw_shadow_isles_metrics_for_match(
+                        puuid, match_data, timeline_data
+                    )
+                )
                 # raw_shurima_metrics_aram.append(get_raw_shurima_metrics_for_match(puuid, match_data, timeline_data))
                 # raw_ixtal_metrics_aram.append(get_raw_ixtal_metrics_for_match(puuid, match_data, timeline_data))
-                raw_noxus_metrics_aram.append(get_raw_noxus_metrics_for_match(puuid, match_data, timeline_data))
-                raw_freljord_metrics_aram.append(get_raw_freljord_metrics_for_match(puuid, match_data, timeline_data))
+                raw_noxus_metrics_aram.append(
+                    get_raw_noxus_metrics_for_match(puuid, match_data, timeline_data)
+                )
+                raw_freljord_metrics_aram.append(
+                    get_raw_freljord_metrics_for_match(puuid, match_data, timeline_data)
+                )
                 matches_counted_aram += 1
             successfully_processed_count += 1
         except Exception as e:
@@ -135,7 +225,9 @@ def lambda_handler(event, context):
     piltover_info_sr = info_from_raw_piltover_metrics(raw_piltover_metrics_sr)
     zaun_info_sr = info_from_raw_zaun_metrics(raw_zaun_metrics_sr)
     bilgewater_info_sr = info_from_raw_bilgewater_metrics(raw_bilgewater_metrics_sr)
-    shadow_isles_info_sr = info_from_raw_shadow_isles_metrics(raw_shadow_isles_metrics_sr)
+    shadow_isles_info_sr = info_from_raw_shadow_isles_metrics(
+        raw_shadow_isles_metrics_sr
+    )
     shurima_info_sr = info_from_raw_shurima_metrics(raw_shurima_metrics_sr)
     ixtal_info_sr = info_from_raw_ixtal_metrics(raw_ixtal_metrics_sr)
     noxus_info_sr = info_from_raw_noxus_metrics(raw_noxus_metrics_sr)
@@ -147,7 +239,9 @@ def lambda_handler(event, context):
     piltover_info_aram = info_from_raw_piltover_metrics(raw_piltover_metrics_aram)
     zaun_info_aram = info_from_raw_zaun_metrics(raw_zaun_metrics_aram)
     bilgewater_info_aram = info_from_raw_bilgewater_metrics(raw_bilgewater_metrics_aram)
-    shadow_isles_info_aram = info_from_raw_shadow_isles_metrics(raw_shadow_isles_metrics_aram)
+    shadow_isles_info_aram = info_from_raw_shadow_isles_metrics(
+        raw_shadow_isles_metrics_aram
+    )
     # shurima_info_aram = info_from_raw_shurima_metrics(raw_shurima_metrics_aram)
     # ixtal_info_aram = info_from_raw_ixtal_metrics(raw_ixtal_metrics_aram)
     noxus_info_aram = info_from_raw_noxus_metrics(raw_noxus_metrics_aram)
@@ -196,4 +290,8 @@ def lambda_handler(event, context):
         Body=json.dumps(player_application_data),
     )
 
-    return {"status": 200, "message": f"Processed -> Application. Processed {successfully_processed_count} matches for {puuid}. There were {error_count} errors."}
+    return {
+        "status": 200,
+        "puuid": puuid,
+        "message": f"Processed -> Application. Processed {successfully_processed_count} matches for {puuid}. There were {error_count} errors.",
+    }

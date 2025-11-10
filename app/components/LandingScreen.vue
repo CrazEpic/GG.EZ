@@ -58,7 +58,7 @@
 				/>
 				<div class="flex flex-row flex-nowrap items-center border-default-primary border-2 bg-default-secondary pl-2 min-w-24">
 					<p class="text-white text-2xl mr-2">#</p>
-					<input v-model="tagline" type="text" placeholder="tagline" class="min-w-24 py-2 px-2 text-white placeholder:text-gray-400" />
+					<input v-model="tagLine" type="text" placeholder="tagline" class="min-w-24 py-2 px-2 text-white placeholder:text-gray-400" />
 				</div>
 
 				<button
@@ -76,15 +76,41 @@
 import { Listbox, ListboxButton, ListboxOptions, ListboxOption } from "@headlessui/vue"
 const playerDataStore = usePlayerDataStore()
 
-const regions = ["AMERICAS", "ASIA", "EUROPE"]
-const selectedRegion = ref("AMERICAS")
+const regions = ["americas", "asia", "europe"]
+const selectedRegion = ref("americas")
 const gameName = ref("")
-const tagline = ref("")
+const tagLine = ref("")
 
 const emit = defineEmits(["close_modal"])
 const enterRegions = async () => {
-	const response = await $fetch("/api/player")
-	playerDataStore.playerData = response
-	emit("close_modal")
+	try {
+		if (gameName.value.trim() === "" || tagLine.value.trim() === "") {
+			alert("Please enter both game name and tagline.")
+			return
+		}
+
+		const response = await $fetch(
+			`/api/player?gameName=${encodeURIComponent(gameName.value)}&tagLine=${encodeURIComponent(tagLine.value)}&region=${selectedRegion.value}`,
+			{
+				method: "GET",
+			}
+		)
+		console.log(response)
+
+		if (!Object.keys(response).find((key) => key === "content")) {
+			alert(response.statusMessage)
+			return
+		}
+		if (response.content == "") {
+			alert(`${response.statusMessage} Please come back in an hour while we crank the numbers.`)
+			return
+		}
+		// found player data
+		playerDataStore.playerData = response.content.applicationStats
+		emit("close_modal")
+	} catch (error) {
+		alert("Error during player fetching: " + error)
+		return
+	}
 }
 </script>

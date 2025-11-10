@@ -84,7 +84,7 @@ def lambda_handler(event, context):
             print(f"Error processing match {match_id}: {e}")
             error_count += 1
 
-    return {"status": 200, "message": f"Processed {successfully_processed_count} matches for {puuid}. There were {error_count} errors."}
+    return {"status": 200, "message": f"Processed {successfully_processed_count} matches for {puuid}. There were {error_count} errors.", "puuid": puuid}
 
 
 def process_match(match_id: str):
