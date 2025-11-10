@@ -47,7 +47,7 @@
 <script setup lang="ts">
 const playerRadarChart = useTemplateRef("playerRadarChart")
 const playerDataStore = usePlayerDataStore()
-const summonerName = playerDataStore.playerData?.sr.ionia_info.summonerName
+const summonerName = playerDataStore.playerData?.gameName
 const mostPlayedLane = playerDataStore.playerData?.sr.ionia_info.most_played_lane
 const archetypeId = playerDataStore.playerData?.sr.ionia_info.archetype_id
 const topThreePros = playerDataStore.playerData?.sr.ionia_info.top_3_pros ?? []
@@ -92,7 +92,7 @@ const selectedPro = ref("")
 const proPlayers = topThreePros?.map((p) => ({
 	name: p[0],
 	stats: p[1],
-	img: `/player-icons/${p[0]}.png`,
+	img: `dan_the_penguin.png`,
 	archetype: p[2]
 }))
 
