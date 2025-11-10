@@ -208,12 +208,9 @@ onMounted(() => {
 	audio.value.loop = true
 	audio.value.volume = 0.5
 	audio.value.play()
-<<<<<<< HEAD
-=======
 
 	hextechSfx.value = new Audio("soundfiles/sfx/hextech.mp3")
 	chemtechSfx.value = new Audio("soundfiles/sfx/chemtech.mp3")
->>>>>>> ad020c99feca6a0b96096a537c6885380cbc7503
 })
 
 onBeforeUnmount(() => {
