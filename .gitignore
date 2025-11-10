@@ -33,5 +33,6 @@ development/*
 !development/output2.png
 !development/output3.png
 !development/k_means_archetypes_sr.json
+!development/pros_ionia_metrics.json
 data_dragon
 public
