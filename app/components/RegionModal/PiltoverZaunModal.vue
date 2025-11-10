@@ -5,7 +5,16 @@
 			<div class="px-4 sm:px-16">
 				<div class="flex justify-between">
 					<button class="bg-black w-16 h-16 sticky top-0 cursor-pointer" @click="((currentRegion = 'PILTOVER'), (selectedNote = ''))"></button>
-					<button class="bg-black w-16 h-16 sticky top-0 cursor-pointer" @click="((currentRegion = 'ZAUN'), (selectedNote = ''))"></button>
+					<button
+						class="bg-black w-16 h-16 sticky top-0 cursor-pointer"
+						@click="
+							() => {
+								currentRegion = 'ZAUN'
+								selectedNote = ''
+								playChemtech()
+							}
+						"
+					></button>
 				</div>
 
 				<PiltoverZaunTimelineMobile
@@ -47,7 +56,16 @@
 
 			<div class="px-4 sm:px-16">
 				<div class="flex justify-between">
-					<button class="bg-black w-16 h-16 sticky top-0 cursor-pointer" @click="((currentRegion = 'PILTOVER'), (selectedNote = ''))"></button>
+					<button
+						class="bg-black w-16 h-16 sticky top-0 cursor-pointer"
+						@click="
+							() => {
+								currentRegion = 'PILTOVER'
+								selectedNote = ''
+								playHextech()
+							}
+						"
+					></button>
 					<button class="bg-black w-16 h-16 sticky top-0 cursor-pointer" @click="((currentRegion = 'ZAUN'), (selectedNote = ''))"></button>
 				</div>
 				<PiltoverZaunTimelineMobile
@@ -166,13 +184,36 @@ onMounted(() => {
 onBeforeUnmount(() => {
 	window.removeEventListener("resize", updateWindowWidth)
 })
+
 const audio = ref()
+const hextechSfx = ref<null | HTMLAudioElement>(null)
+const chemtechSfx = ref<null | HTMLAudioElement>(null)
+
+const playHextech = () => {
+	if (hextechSfx.value) {
+		hextechSfx.value.currentTime = 0
+		hextechSfx.value.play()
+	}
+}
+
+const playChemtech = () => {
+	if (chemtechSfx.value) {
+		chemtechSfx.value.currentTime = 0
+		chemtechSfx.value.play()
+	}
+}
 
 onMounted(() => {
 	audio.value = new Audio("soundfiles/region_music/piltover.mp3")
 	audio.value.loop = true
 	audio.value.volume = 0.5
 	audio.value.play()
+<<<<<<< HEAD
+=======
+
+	hextechSfx.value = new Audio("soundfiles/sfx/hextech.mp3")
+	chemtechSfx.value = new Audio("soundfiles/sfx/chemtech.mp3")
+>>>>>>> ad020c99feca6a0b96096a537c6885380cbc7503
 })
 
 onBeforeUnmount(() => {
