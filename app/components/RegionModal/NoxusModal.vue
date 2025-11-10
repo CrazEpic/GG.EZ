@@ -11,19 +11,19 @@
 
 <script setup lang="ts">
 const playerDataStore = usePlayerDataStore()
-const avgPercentTeamDamage = Number(playerDataStore.playerData?.sr.noxus_info.avg_team_damage_share.toFixed(2)) * 100 + '%'
-const totalPhysicalDealt = playerDataStore.playerData?.sr.noxus_info.total_physical_damage_dealt_to_champions
-const totalMagicDealt = playerDataStore.playerData?.sr.noxus_info.total_magic_damage_dealt_to_champions
-const totalTrueDealt = playerDataStore.playerData?.sr.noxus_info.total_true_damage_dealt_to_champions
-const avgKDA = Number(playerDataStore.playerData?.sr.noxus_info.avg_kda.toFixed(2))
-const firstBloods = playerDataStore.playerData?.sr.noxus_info.total_first_bloods
-const totalKills = playerDataStore.playerData?.sr.noxus_info.total_kills
+const avgPercentTeamDamage = useSessionStore().displaySR ? Number(playerDataStore.playerData?.sr.noxus_info.avg_team_damage_share.toFixed(2)) * 100 + '%' : Number(playerDataStore.playerData?.aram.noxus_info.avg_team_damage_share.toFixed(2)) * 100 + '%'
+const totalPhysicalDealt = useSessionStore().displaySR ? playerDataStore.playerData?.sr.noxus_info.total_physical_damage_dealt_to_champions : playerDataStore.playerData?.aram.noxus_info.total_physical_damage_dealt_to_champions
+const totalMagicDealt = useSessionStore().displaySR ? playerDataStore.playerData?.sr.noxus_info.total_magic_damage_dealt_to_champions : playerDataStore.playerData?.aram.noxus_info.total_magic_damage_dealt_to_champions
+const totalTrueDealt = useSessionStore().displaySR ? playerDataStore.playerData?.sr.noxus_info.total_true_damage_dealt_to_champions : playerDataStore.playerData?.aram.noxus_info.total_true_damage_dealt_to_champions
+const avgKDA = Number(useSessionStore().displaySR ? playerDataStore.playerData?.sr.noxus_info.avg_kda.toFixed(2) : playerDataStore.playerData?.aram.noxus_info.avg_kda.toFixed(2))
+const firstBloods = useSessionStore().displaySR ? playerDataStore.playerData?.sr.noxus_info.total_first_bloods : playerDataStore.playerData?.aram.noxus_info.total_first_bloods
+const totalKills = useSessionStore().displaySR ? playerDataStore.playerData?.sr.noxus_info.total_kills : playerDataStore.playerData?.aram.noxus_info.total_kills
 const firstBloodPercentage = Math.round((firstBloods / totalKills) * 100)
-const totalDoublekills = playerDataStore.playerData?.sr.noxus_info.total_double_kills
-const totalTriplekills = playerDataStore.playerData?.sr.noxus_info.total_triple_kills
-const totalQuadrakills = playerDataStore.playerData?.sr.noxus_info.total_quadra_kills
-const totalPentakills = playerDataStore.playerData?.sr.noxus_info.total_penta_kills
-const largestKillingSpree = playerDataStore.playerData?.sr.noxus_info.highest_largest_killing_spree
+const totalDoublekills = useSessionStore().displaySR ? playerDataStore.playerData?.sr.noxus_info.total_double_kills : playerDataStore.playerData?.aram.noxus_info.total_double_kills
+const totalTriplekills = useSessionStore().displaySR ? playerDataStore.playerData?.sr.noxus_info.total_triple_kills : playerDataStore.playerData?.aram.noxus_info.total_triple_kills
+const totalQuadrakills = useSessionStore().displaySR ? playerDataStore.playerData?.sr.noxus_info.total_quadra_kills : playerDataStore.playerData?.aram.noxus_info.total_quadra_kills
+const totalPentakills = useSessionStore().displaySR ? playerDataStore.playerData?.sr.noxus_info.total_penta_kills : playerDataStore.playerData?.aram.noxus_info.total_penta_kills
+const largestKillingSpree = useSessionStore().displaySR ? playerDataStore.playerData?.sr.noxus_info.highest_largest_killing_spree : playerDataStore.playerData?.aram.noxus_info.highest_largest_killing_spree
 
 const noxusData = {
 	backdropImage: "/region-backdrop/noxusbackdrop.png",
@@ -67,8 +67,8 @@ const noxusStats = {
 const noxusAchievements = {
 	bgColor: "bg-noxus-secondary",
 	borderColor: "border-noxus-primary",
-	sectionText: "YOUR ACHIEVEMENTS",
-	achievementText: "Your longest game was on 11/2/2025, lasting 100 minutes. And yada YADA YADA",
+	sectionText: "The Rift Report",
+	achievementText: useSessionStore().displaySR ? playerDataStore.playerData?.llm_responses.sr.noxus_response : playerDataStore.playerData?.llm_responses.aram.noxus_response,
 }
 
 const noxusContinue = {

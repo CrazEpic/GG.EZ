@@ -61,17 +61,26 @@
 				</div>
 
 				<button
-					@click="playIntro(); enterRegions()"
+					@click="(playIntro(), enterRegions())"
 					class="p-2 text-white rounded-lg hover:brightness-200 cursor-pointer bg-default-secondary border-default-primary border-2"
 				>
 					GO
 				</button>
+				<Switch
+					v-model="sessionStore.displaySR"
+					:class="sessionStore.displaySR ? 'bg-default-secondary' : 'bg-freljord-secondary'"
+					class="relative inline-flex w-32 items-center justify-center rounded-full text-white border-default-primary border-2 cursor-pointer"
+				>
+					{{ sessionStore.displaySR ? "SR" : "ARAM" }}
+				</Switch>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
+import { Switch } from "@headlessui/vue"
+const sessionStore = useSessionStore()
 import { Listbox, ListboxButton, ListboxOptions, ListboxOption } from "@headlessui/vue"
 const playerDataStore = usePlayerDataStore()
 
@@ -119,11 +128,10 @@ const enterRegions = async () => {
 let introAudio: HTMLAudioElement | null = null
 
 const playIntro = () => {
-  if (!introAudio) {
-    introAudio = new Audio('soundfiles/sfx/windintro.mp3')
-  }
-  introAudio.currentTime = 0
-  introAudio.play()
+	if (!introAudio) {
+		introAudio = new Audio("soundfiles/sfx/windintro.mp3")
+	}
+	introAudio.currentTime = 0
+	introAudio.play()
 }
-
 </script>

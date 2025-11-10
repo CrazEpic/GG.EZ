@@ -19,18 +19,18 @@ const freljordData = {
 }
 
 const playerDataStore = usePlayerDataStore()
-const totalPhysicalTaken = playerDataStore.playerData?.sr.freljord_info.total_physical_damage_taken
-const totalMagicTaken = playerDataStore.playerData?.sr.freljord_info.total_magic_damage_taken
-const totalTrueTaken = playerDataStore.playerData?.sr.freljord_info.total_true_damage_taken
+const totalPhysicalTaken = useSessionStore().displaySR ? playerDataStore.playerData?.sr.freljord_info.total_physical_damage_taken : playerDataStore.playerData?.aram.freljord_info.total_physical_damage_taken
+const totalMagicTaken = useSessionStore().displaySR ? playerDataStore.playerData?.sr.freljord_info.total_magic_damage_taken : playerDataStore.playerData?.aram.freljord_info.total_magic_damage_taken
+const totalTrueTaken = useSessionStore().displaySR ? playerDataStore.playerData?.sr.freljord_info.total_true_damage_taken : playerDataStore.playerData?.aram.freljord_info.total_true_damage_taken
 const totalDamageTaken = (totalPhysicalTaken ?? 0) + (totalMagicTaken ?? 0) + (totalTrueTaken ?? 0)
 const physicalPercentage = Math.round(((totalPhysicalTaken ?? 0) / totalDamageTaken) * 100)
 const magicPercentage = Math.round(((totalMagicTaken ?? 0) / totalDamageTaken) * 100)
 const truePercentage = Math.round(((totalTrueTaken ?? 0) / totalDamageTaken) * 100)
-const damageSelfMitigated = playerDataStore.playerData?.sr.freljord_info.total_damage_self_mitigated
-const totalHeal = playerDataStore.playerData?.sr.freljord_info.total_heal
-const totalHealsOnTeammates = playerDataStore.playerData?.sr.freljord_info.total_heals_on_teammates
-const avgSurvivalRatio = Number(playerDataStore.playerData?.sr.freljord_info.avg_survival_ratio.toFixed(2))
-const timePlayed = playerDataStore.playerData?.sr.freljord_info.total_play_time
+const damageSelfMitigated = useSessionStore().displaySR ? playerDataStore.playerData?.sr.freljord_info.total_damage_self_mitigated : playerDataStore.playerData?.aram.freljord_info.total_damage_self_mitigated
+const totalHeal = useSessionStore().displaySR ? playerDataStore.playerData?.sr.freljord_info.total_heal : playerDataStore.playerData?.aram.freljord_info.total_heal
+const totalHealsOnTeammates = useSessionStore().displaySR ? playerDataStore.playerData?.sr.freljord_info.total_heals_on_teammates : playerDataStore.playerData?.aram.freljord_info.total_heals_on_teammates
+const avgSurvivalRatio = Number(useSessionStore().displaySR ? playerDataStore.playerData?.sr.freljord_info.avg_survival_ratio.toFixed(2) : playerDataStore.playerData?.aram.freljord_info.avg_survival_ratio.toFixed(2))
+const timePlayed = useSessionStore().displaySR ? playerDataStore.playerData?.sr.freljord_info.total_play_time : playerDataStore.playerData?.aram.freljord_info.total_play_time
 
 const hours = Math.floor(timePlayed / 60);
 const minutes = timePlayed % 60;
@@ -68,8 +68,8 @@ const freljordStats = {
 const freljordAchievements = {
 	bgColor: "bg-freljord-secondary",
 	borderColor: "border-freljord-primary",
-	sectionText: "YOUR ACHIEVEMENTS",
-	achievementText: "Your longest game was on 11/2/2025, lasting 100 minutes. And yada YADA YADA",
+	sectionText: "The Rift Report",
+	achievementText: useSessionStore().displaySR ? playerDataStore.playerData?.llm_responses.sr.freljord_response : playerDataStore.playerData?.llm_responses.aram.freljord_response,
 }
 
 const freljordContinue = {

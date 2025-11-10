@@ -11,13 +11,14 @@
 
 <script setup lang="ts">
 const playerDataStore = usePlayerDataStore()
-const totalGoldEarned = playerDataStore.playerData?.sr.bilgewater_info.total_gold_earned
-const topItemsPurchased = playerDataStore.playerData?.sr.bilgewater_info.top_3_items
-const avgCSPerMinute = Number(playerDataStore.playerData?.sr.bilgewater_info.avg_cs_per_min.toFixed(2))
-const totalShutdownBounty = playerDataStore.playerData?.sr.bilgewater_info.total_shutdown_bounty
-const highest_shutdown_bounty = playerDataStore.playerData?.sr.bilgewater_info.highest_shutdown_bounty
-const mostGoldSingleMatch = playerDataStore.playerData?.sr.bilgewater_info.most_gold_in_single_game
-const mostCSSingleMatch = playerDataStore.playerData?.sr.bilgewater_info.most_cs_in_single_game
+
+const totalGoldEarned =  useSessionStore().displaySR ? playerDataStore.playerData?.sr.bilgewater_info.total_gold_earned : playerDataStore.playerData?.aram.bilgewater_info.total_gold_earned
+const topItemsPurchased = useSessionStore().displaySR ? playerDataStore.playerData?.sr.bilgewater_info.top_3_items : playerDataStore.playerData?.aram.bilgewater_info.top_3_items
+const avgCSPerMinute = Number(useSessionStore().displaySR ? playerDataStore.playerData?.sr.bilgewater_info.avg_cs_per_min.toFixed(2) : playerDataStore.playerData?.aram.bilgewater_info.avg_cs_per_min.toFixed(2))
+const totalShutdownBounty = useSessionStore().displaySR ? playerDataStore.playerData?.sr.bilgewater_info.total_shutdown_bounty : playerDataStore.playerData?.aram.bilgewater_info.total_shutdown_bounty
+const highest_shutdown_bounty = useSessionStore().displaySR ? playerDataStore.playerData?.sr.bilgewater_info.highest_shutdown_bounty : playerDataStore.playerData?.aram.bilgewater_info.highest_shutdown_bounty
+const mostGoldSingleMatch = useSessionStore().displaySR ? playerDataStore.playerData?.sr.bilgewater_info.most_gold_in_single_game : playerDataStore.playerData?.aram.bilgewater_info.most_gold_in_single_game
+const mostCSSingleMatch = useSessionStore().displaySR ? playerDataStore.playerData?.sr.bilgewater_info.most_cs_in_single_game : playerDataStore.playerData?.aram.bilgewater_info.most_cs_in_single_game
 
 const bilgewaterData = {
 	backdropImage: "/region-backdrop/bilgewaterbackdrop.png",
@@ -30,7 +31,7 @@ const bilgewaterData = {
 const bilgewaterStats = {
 	borderColor: "border-bilgewater-primary",
 	stats: [
-		{ title: "Total Gold Earned", value: totalGoldEarned + 'g'},
+		{ title: "Total Gold Earned", value: totalGoldEarned + "g" },
 		{ title: "Top Items Purchased", topItems: topItemsPurchased },
 		{ title: "Average CS Per Minute", value: avgCSPerMinute },
 		{ title: "Total Shutdown Bounty", value: totalShutdownBounty },
@@ -43,8 +44,8 @@ const bilgewaterStats = {
 const bilgewaterAchievements = {
 	bgColor: "bg-bilgewater-secondary",
 	borderColor: "border-bilgewater-primary",
-	sectionText: "YOUR ACHIEVEMENTS",
-	achievementText: "Your longest game was on 11/2/2025, lasting 100 minutes. And yada YADA YADA",
+	sectionText: "The Rift Report",
+	achievementText: useSessionStore().displaySR ? playerDataStore.playerData?.llm_responses.sr.bilgewater_response : playerDataStore.playerData?.llm_responses.aram.bilgewater_response,
 }
 
 const bilgewaterContinue = {
@@ -58,16 +59,16 @@ const bilgewaterContinue = {
 const audio = ref()
 
 onMounted(() => {
-    audio.value = new Audio("soundfiles/region_music/bilgewater.mp3")
-    audio.value.loop = true
-    audio.value.volume = 0.5
-    audio.value.play()
+	audio.value = new Audio("soundfiles/region_music/bilgewater.mp3")
+	audio.value.loop = true
+	audio.value.volume = 0.5
+	audio.value.play()
 })
 
 onBeforeUnmount(() => {
-    if (audio.value) {
-        audio.value.pause()
-        audio.value.currentTime = 0
-    }
+	if (audio.value) {
+		audio.value.pause()
+		audio.value.currentTime = 0
+	}
 })
 </script>

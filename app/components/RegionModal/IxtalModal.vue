@@ -46,8 +46,8 @@ const ixtalStats = {
 const ixtalAchievements = {
 	bgColor: "bg-ixtal-secondary",
 	borderColor: "border-ixtal-primary",
-	sectionText: "YOUR ACHIEVEMENTS",
-	achievementText: "Your longest game was on 11/2/2025, lasting 100 minutes. And yada YADA YADA",
+	sectionText: "The Rift Report",
+	achievementText: playerDataStore.playerData?.llm_responses.sr.ixtal_response,
 }
 
 const ixtalContinue = {

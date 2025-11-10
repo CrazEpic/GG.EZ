@@ -36,9 +36,9 @@ const shurimaStats = {
 	borderColor: "border-shurima-primary",
 	stats: [
 		{ title: "Total Turret Kills", value: totalTurretKills },
-		{ title: "Total Objectives", value: {totalDragonKills, totalBaronKills, totalHeraldKills, totalAtakhanKills} },
+		{ title: "Total Objectives", value: { totalDragonKills, totalBaronKills, totalHeraldKills, totalAtakhanKills } },
 		{ title: "Average Objective Participation", value: totalObjParticipationRatio },
-		{ title: "First Objectives Taken", value: {totalFirstTowerKills, totalFirstDragonKills, totalFirstBaronKills, totalFirstRiftHeraldKills} },
+		{ title: "First Objectives Taken", value: { totalFirstTowerKills, totalFirstDragonKills, totalFirstBaronKills, totalFirstRiftHeraldKills } },
 		{ title: "Total Damage Dealt to Objectives", value: totalDamageDealtObj },
 		{ title: "Total Damage Dealt to Structures", value: totalDamageDealtStructures },
 	],
@@ -47,8 +47,8 @@ const shurimaStats = {
 const shurimaAchievements = {
 	bgColor: "bg-shurima-secondary",
 	borderColor: "border-shurima-primary",
-	sectionText: "YOUR ACHIEVEMENTS",
-	achievementText: "Your longest game was on 11/2/2025, lasting 100 minutes. And yada YADA YADA",
+	sectionText: "The Rift Report",
+	achievementText: playerDataStore.playerData?.llm_responses.sr.shurima_response,
 }
 
 const shurimaContinue = {
@@ -61,16 +61,16 @@ const shurimaContinue = {
 const audio = ref()
 
 onMounted(() => {
-    audio.value = new Audio("soundfiles/region_music/shurima.mp3")
-    audio.value.loop = true
-    audio.value.volume = 0.5
-    audio.value.play()
+	audio.value = new Audio("soundfiles/region_music/shurima.mp3")
+	audio.value.loop = true
+	audio.value.volume = 0.5
+	audio.value.play()
 })
 
 onBeforeUnmount(() => {
-    if (audio.value) {
-        audio.value.pause()
-        audio.value.currentTime = 0
-    }
+	if (audio.value) {
+		audio.value.pause()
+		audio.value.currentTime = 0
+	}
 })
 </script>

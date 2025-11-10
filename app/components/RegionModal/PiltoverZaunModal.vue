@@ -10,9 +10,9 @@
 
 				<PiltoverZaunTimelineMobile
 					v-if="windowWidth < 640"
-					note1="Observation #1"
-					note2="Observation #2"
-					note3="Observation #3"
+					note1="Piltover Observation #1"
+					note2="Piltover Observation #2"
+					note3="Piltover Observation #3"
 					region="PILTOVER"
 					@selectedNote="
 						(note) => {
@@ -23,9 +23,9 @@
 				></PiltoverZaunTimelineMobile>
 				<PiltoverZaunTimeline
 					v-else
-					note1="Observation #1"
-					note2="Observation #2"
-					note3="Observation #3"
+					note1="Piltover Observation #1"
+					note2="Piltover Observation #2"
+					note3="Piltover Observation #3"
 					region="PILTOVER"
 					@selectedNote="
 						(note) => {
@@ -35,10 +35,7 @@
 				/>
 				<div ref="piltoverNoteContent" class="bg-piltover-secondary border-piltover-primary border-2 p-2">
 					<p v-if="selectedNote" class="text-white">
-						{{ selectedNote }} Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat.
-						In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus
-						bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad
-						litora torquent per conubia nostra inceptos himenaeos.
+						{{ computedPlayerData(selectedNote) }}
 					</p>
 					<p v-else class="text-white">{{ defaultNoteContent }}</p>
 				</div>
@@ -55,9 +52,9 @@
 				</div>
 				<PiltoverZaunTimelineMobile
 					v-if="windowWidth < 640"
-					note1="Observation #1"
-					note2="Observation #2"
-					note3="Observation #3"
+					note1="Zaun Observation #1"
+					note2="Zaun Observation #2"
+					note3="Zaun Observation #3"
 					region="ZAUN"
 					@selectedNote="
 						(note) => {
@@ -68,9 +65,9 @@
 				></PiltoverZaunTimelineMobile>
 				<PiltoverZaunTimeline
 					v-else
-					note1="Observation #1"
-					note2="Observation #2"
-					note3="Observation #3"
+					note1="Zaun Observation #1"
+					note2="Zaun Observation #2"
+					note3="Zaun Observation #3"
 					region="ZAUN"
 					@selectedNote="
 						(note) => {
@@ -80,10 +77,7 @@
 				/>
 				<div ref="zaunNoteContent" class="bg-zaun-secondary border-zaun-primary border-2 p-2">
 					<p v-if="selectedNote" class="text-white">
-						{{ selectedNote }} Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat.
-						In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus
-						bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad
-						litora torquent per conubia nostra inceptos himenaeos.
+						{{ computedPlayerData(selectedNote) }}
 					</p>
 					<p v-else class="text-white">{{ defaultNoteContent }}</p>
 				</div>
@@ -95,6 +89,7 @@
 
 <script setup lang="ts">
 const currentRegion = ref<"PILTOVER" | "ZAUN">("PILTOVER")
+const playerDataStore = usePlayerDataStore()
 const piltoverNoteContent = useTemplateRef("piltoverNoteContent")
 const zaunNoteContent = useTemplateRef("zaunNoteContent")
 
@@ -110,10 +105,28 @@ const scrollIntoZaunNote = () => {
 
 const selectedNote = ref("")
 
+const computedPlayerData = (selected) => {
+	if (selected === "Piltover Observation #1") {
+		return useSessionStore().displaySR ? playerDataStore.playerData?.llm_responses.sr.piltover_response[0] : playerDataStore.playerData?.llm_responses.lr.piltover_response[0]
+	} else if (selected === "Piltover Observation #2") {
+		return useSessionStore().displaySR ? playerDataStore.playerData?.llm_responses.sr.piltover_response[1] : playerDataStore.playerData?.llm_responses.lr.piltover_response[1]
+	} else if (selected === "Piltover Observation #3") {
+		return useSessionStore().displaySR ? playerDataStore.playerData?.llm_responses.sr.piltover_response[2] : playerDataStore.playerData?.llm_responses.lr.piltover_response[2]
+	} else if (selected === "Zaun Observation #1") {
+		return useSessionStore().displaySR ? playerDataStore.playerData?.llm_responses.sr.zaun_response[0] : playerDataStore.playerData?.llm_responses.lr.zaun_response[0]
+	} else if (selected === "Zaun Observation #2") {
+		return useSessionStore().displaySR ? playerDataStore.playerData?.llm_responses.sr.zaun_response[1] : playerDataStore.playerData?.llm_responses.lr.zaun_response[1]
+	} else if (selected === "Zaun Observation #3") {
+		return useSessionStore().displaySR ? playerDataStore.playerData?.llm_responses.sr.zaun_response[2] : playerDataStore.playerData?.llm_responses.lr.zaun_response[2]
+	} else {
+		return defaultNoteContent
+	}
+}
+
 const piltoverData = {
 	backdropImage: "/region-backdrop/piltoverbackdrop.png",
 	title: "Piltover",
-	description: "REPLACE ME",
+	description: "The City of Progress",
 	bgColor: "bg-piltover-secondary",
 	borderColor: "border-piltover-primary",
 }
@@ -121,14 +134,14 @@ const piltoverData = {
 const piltoverContinue = {
 	bgColor: "bg-piltover-secondary",
 	borderColor: "border-piltover-primary",
-	continueText: "YOU'VE ENDURED THE FROST",
+	continueText: "YOU'VE EMBRACED THE PROGRESS",
 	buttonText: "Continue Your Journey",
 }
 
 const zaunData = {
 	backdropImage: "/region-backdrop/zaunbackdrop.png",
 	title: "Zaun",
-	description: "REPLACE ME",
+	description: "The Undercity of Progress",
 	bgColor: "bg-zaun-secondary",
 	borderColor: "border-zaun-primary",
 }
@@ -136,7 +149,7 @@ const zaunData = {
 const zaunContinue = {
 	bgColor: "bg-zaun-secondary",
 	borderColor: "border-zaun-primary",
-	continueText: "YOU'VE ENDURED THE FROST",
+	continueText: "YOU'VE EMBRACED THE CHAOS",
 	buttonText: "Continue Your Journey",
 }
 
@@ -156,16 +169,16 @@ onBeforeUnmount(() => {
 const audio = ref()
 
 onMounted(() => {
-    audio.value = new Audio("soundfiles/region_music/piltover.mp3")
-    audio.value.loop = true
-    audio.value.volume = 0.5
-    audio.value.play()
+	audio.value = new Audio("soundfiles/region_music/piltover.mp3")
+	audio.value.loop = true
+	audio.value.volume = 0.5
+	audio.value.play()
 })
 
 onBeforeUnmount(() => {
-    if (audio.value) {
-        audio.value.pause()
-        audio.value.currentTime = 0
-    }
+	if (audio.value) {
+		audio.value.pause()
+		audio.value.currentTime = 0
+	}
 })
 </script>
