@@ -67,6 +67,11 @@ def lambda_handler(event, context):
     raw_noxus_metrics_aram = []
     raw_freljord_metrics_aram = []
 
+    play_time_sr = 0
+    play_time_aram = 0
+    wins_sr = 0
+    wins_aram = 0
+
     successfully_processed_count = 0
     error_count = 0
 
@@ -84,6 +89,10 @@ def lambda_handler(event, context):
             timeline_data = MatchTimelineData.model_validate_json(timeline_obj["Body"].read().decode("utf-8"))
             gameMode = match_data.game.gameMode
             if gameMode == "CLASSIC" or gameMode == "SWIFTPLAY":
+                play_time_sr += match_data.players[next(i for i, p in enumerate(match_data.players) if p.identity.puuid == puuid)].combat.timePlayed / 60
+                team_id = match_data.players[next(i for i, p in enumerate(match_data.players) if p.identity.puuid == puuid)].identity.teamId
+                if match_data.game.teams[next(i for i, t in enumerate(match_data.game.teams) if t.teamId == team_id)].win:
+                    wins_sr += 1
                 raw_ionia_metrics_sr.append(get_raw_ionia_metrics_for_match(puuid, match_data, timeline_data))
                 raw_demacia_metrics_sr.append(get_raw_demacia_metrics_for_match(puuid, match_data, timeline_data))
                 raw_targon_metrics_sr.append(get_raw_targon_metrics_for_match(puuid, match_data, timeline_data))
@@ -97,6 +106,10 @@ def lambda_handler(event, context):
                 raw_freljord_metrics_sr.append(get_raw_freljord_metrics_for_match(puuid, match_data, timeline_data))
                 matches_counted_sr += 1
             elif gameMode == "ARAM":
+                play_time_aram += match_data.players[next(i for i, p in enumerate(match_data.players) if p.identity.puuid == puuid)].combat.timePlayed / 60
+                team_id = match_data.players[next(i for i, p in enumerate(match_data.players) if p.identity.puuid == puuid)].identity.teamId
+                if match_data.game.teams[next(i for i, t in enumerate(match_data.game.teams) if t.teamId == team_id)].win:
+                    wins_aram += 1
                 # raw_ionia_metrics_aram.append(get_raw_ionia_metrics_for_match(puuid, match_data, timeline_data))
                 raw_demacia_metrics_aram.append(get_raw_demacia_metrics_for_match(puuid, match_data, timeline_data))
                 # raw_targon_metrics_aram.append(get_raw_targon_metrics_for_match(puuid, match_data, timeline_data))
@@ -166,6 +179,14 @@ def lambda_handler(event, context):
             # "ixtal_info": ixtal_info_aram,
             "noxus_info": noxus_info_aram,
             "freljord_info": freljord_info_aram,
+        },
+        "overview": {
+            "matches_counted_sr": matches_counted_sr,
+            "matches_counted_aram": matches_counted_aram,
+            "play_time_sr": play_time_sr,
+            "play_time_aram": play_time_aram,
+            "wins_sr": wins_sr,
+            "wins_aram": wins_aram,
         },
     }
 
