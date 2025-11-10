@@ -4769,7 +4769,7 @@ def info_from_raw_ionia_metrics(raw_metrics: List[Dict[str, Any]]):
             "vision_awareness": 0.0,
             "consistency": 0.0,
             "most_played_lane": "",
-            "get_top_3_pros": [],
+            "top_3_pros": [],
             "archetype_id": -1,
             "archetype_similarity": 0.0,
         }

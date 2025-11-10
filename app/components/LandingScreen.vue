@@ -94,7 +94,6 @@ const enterRegions = async () => {
 				method: "GET",
 			}
 		)
-		console.log(response)
 
 		if (!Object.keys(response).find((key) => key === "content")) {
 			alert(response.statusMessage)
@@ -106,6 +105,10 @@ const enterRegions = async () => {
 		}
 		// found player data
 		playerDataStore.playerData = response.content.applicationStats
+		playerDataStore.playerData.llm_responses = response.content.llmStats
+		playerDataStore.playerData.gameName = gameName.value
+		playerDataStore.playerData.tagLine = tagLine.value
+		playerDataStore.playerData.puuid = response.content.puuid
 		emit("close_modal")
 	} catch (error) {
 		alert("Error during player fetching: " + error)

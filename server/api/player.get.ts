@@ -72,9 +72,9 @@ export default defineEventHandler(async (event) => {
 		// found in S3, so either in progress or completed
 		try {
 			// check the final stage of pipeline, the llm responses
-			// const command = new GetObjectCommand({ Bucket: bucket_name, Key: `application/${puuid}/llm_responses.json` })
-			// const response = await s3_client.send(command)
-			// const llmStats = await response.Body.transformToString()
+			const command = new GetObjectCommand({ Bucket: bucket_name, Key: `application/${puuid}/llm_stats.json` })
+			const response = await s3_client.send(command)
+			const llmStats = await response.Body.transformToString()
 
 			const command_2 = new GetObjectCommand({ Bucket: bucket_name, Key: `application/${puuid}/application_stats.json` })
 			const response_2 = await s3_client.send(command_2)
@@ -83,7 +83,7 @@ export default defineEventHandler(async (event) => {
 				puuid: puuid,
 				statusMessage: "Player data retrieval complete.",
 				content: {
-					// llmStats: JSON.parse(llmStats),
+					llmStats: JSON.parse(llmStats),
 					applicationStats: JSON.parse(applicationStats),
 				},
 			}
